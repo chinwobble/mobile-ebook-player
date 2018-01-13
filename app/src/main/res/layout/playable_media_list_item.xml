@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="listener"
+            type="com.example.benne.daisyapp2.ui.BookDetailsUserActionListener"
+            />
+        <variable
+            name="item"
+            type="android.support.v4.media.MediaBrowserCompat.MediaItem" />
+    </data>
+
+<LinearLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground">
+
+
+<LinearLayout
+    android:layout_weight="1"
+    android:layout_width="0px"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@{item.description.title}"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:text="Chapter 1" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@{item.description.subtitle}"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary"
+        tools:text="John Doe, his brothers, his sisters, his pets and his more than amazing band" />
+</LinearLayout>
+
+    <Button
+        android:id="@+id/play_button"
+        android:text="Play"
+        android:onClick="@{(view) -> listener.onPlaySection(item)}"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         />
+
+</LinearLayout>
+</layout>
