@@ -1,12 +1,14 @@
 package com.example.benne.daisyapp2.data.daisy202
 
+import android.os.*
+
 /**
  * Created by benne on 6/01/2018.
  */
 data class DaisyBook(
     val navElements: List<NavElement>,
-    val metadata: DaisyBookMetadata) {
-
+    val metadata: DaisyBookMetadata,
+    val location: String) {
     companion object {
         fun getLevels() {
 
@@ -32,32 +34,25 @@ data class DaisyBookMetadata(
     val date: String,
     val publisher: String,
     val creator: String
-) {
-}
+)
 
-open class NavElement
-    private constructor(
+open class NavElement {
+    data class HeadingReference(
+       val id: String,
+       val label: String,
+       val smilFile: String,
+       val fragment: String,
+       val level: Byte
+    ) : NavElement()
+
+    // page reference
+    data class PageReference(
         val id: String,
         val label: String,
         val smilFile: String,
-        val fragment: String
-) {
-    class HeadingReference(
-       id: String,
-       label: String,
-       smilFile: String,
-       fragment: String,
-       val level: Byte
-    ) : NavElement(id, label, smilFile, fragment)
-
-    // page reference
-    class PageReference(
-        id: String,
-        label: String,
-        smilFile: String,
-        fragment: String,
-        className: String?
-    ) : NavElement(id, label, smilFile, fragment) {
+        val fragment: String,
+        private val className: String?
+    ) : NavElement() {
         val pageType: PageType =
             when (className?.toLowerCase()) {
                 "page-front" -> PageType.PAGE_FRONT

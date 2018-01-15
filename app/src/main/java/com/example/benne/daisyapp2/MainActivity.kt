@@ -40,7 +40,7 @@ class MainActivity
 
 //        _viewModel.currentSelection.observe(this,
 //            Observer<String> {t ->
-//                // save selected mediaId
+//                // save selected currentQueueMediaId
 //                navigateToBookDetails()
 //            })
     }
@@ -73,9 +73,9 @@ class MainActivity
             return
         }
 
-//        if (fragment == null || !TextUtils.equals(fragment.mediaId, mediaId)) {
+//        if (fragment == null || !TextUtils.equals(fragment.currentQueueMediaId, currentQueueMediaId)) {
 //            fragment = MediaBrowserFragment()
-//            fragment.mediaId = mediaId
+//            fragment.currentQueueMediaId = currentQueueMediaId
         supportFragmentManager
             .beginTransaction()
             .replace(
@@ -85,7 +85,7 @@ class MainActivity
             .commit()
         // If this is not the top level media (root), we add it to the fragment back stack,
         // so that actionbar toggle and Back will work appropriately:
-//        if (mediaId != null) {
+//        if (currentQueueMediaId != null) {
 //            transaction.addToBackStack(null)
 //        }
     }
@@ -93,4 +93,5 @@ class MainActivity
     interface MediaBrowserListener {
         val mediaBrowserCallBack: MediaBrowserCompat.SubscriptionCallback
     }
+
 }

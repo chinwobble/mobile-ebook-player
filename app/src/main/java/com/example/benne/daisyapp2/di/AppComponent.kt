@@ -8,8 +8,8 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 
-@Component(modules = arrayOf(
-        AndroidInjectionModule::class,
-        AppModule::class
-))
-interface AppComponent: AndroidInjector<MainActivity>
+//@Component(modules = arrayOf(
+//        AndroidInjectionModule::class,
+//        AppModule::class
+//))
+//interface AppComponent: AndroidInjector<MainActivity>

@@ -1,12 +1,15 @@
 package com.example.benne.daisyapp2.data.daisy202
 
+import org.jsoup.*
 import org.jsoup.nodes.*
+import java.io.*
 
 /**
  * Created by benne on 7/01/2018.
  */
 object NCCParser {
-    fun parseNCC(document: Document): DaisyBook {
+    fun parseNCC(file: File): DaisyBook {
+        val document = Jsoup.parse(file.readText())
         val headChildren = document.head().children()
 
         val metadata =
@@ -15,7 +18,7 @@ object NCCParser {
             else // hack since there's a bug in JSoup
                 parseDaisyMetadata(document.body().children())
         val navElements = parseNavElements(document.body())
-        return DaisyBook(navElements, metadata)
+        return DaisyBook(navElements, metadata, file.parent)
     }
 
     private fun parseDaisyMetadata(headChildren: Iterable<Element>) : DaisyBookMetadata {

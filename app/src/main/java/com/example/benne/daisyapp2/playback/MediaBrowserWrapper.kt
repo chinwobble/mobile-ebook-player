@@ -52,7 +52,9 @@ class MediaBrowserWrapper(
     }
 
     fun playSection(mediaId: String) {
-        _mediaController.transportControls.playFromMediaId(mediaId, null)
+        _mediaController
+            .transportControls
+            .playFromMediaId(mediaId, null)
     }
 
 

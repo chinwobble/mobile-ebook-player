@@ -22,13 +22,11 @@ data class SmilParElement(
         val id: String,
         val text: SmilTextElement,
         val audio: SmilAudioElement?,
-        val nestedSeq: Iterable<SmilNestedSeqElement>?
-) {
-
-}
+        val nestedSeq: List<SmilNestedSeqElement>
+)
 
 data class SmilNestedSeqElement(
-        val audioReferences: Iterable<SmilAudioElement>
+        val audioReferences: List<SmilAudioElement>
 ) {
 
 }
