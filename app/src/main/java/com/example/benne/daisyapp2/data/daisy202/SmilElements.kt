@@ -42,8 +42,12 @@ data class SmilAudioElement(
             elem.attr("id"),
             elem.attr("src"),
             elem.attr("clip-begin")
-                    .toMaybeMilliseconds(),
+                .replace("npt=","")
+                .replace("s","")
+                .toMaybeMicroSeconds(),
             elem.attr("clip-end")
-                    .toMaybeMilliseconds())
+                .replace("npt=","")
+                .replace("s","")
+                .toMaybeMicroSeconds())
 
 }

@@ -259,7 +259,9 @@ class MediaNotificationManager
             .setOnlyAlertOnce(true)
             .setContentIntent(createContentIntent(description))
             .setContentTitle(description.title)
-            .setContentText(description.subtitle)
+            //.setSubText(mMetadata!!.getString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE))
+            //.setContentInfo()
+            .setContentText(mMetadata!!.getString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE))
             .setShowWhen(false)
             //.setLargeIcon(art)
 

@@ -2,7 +2,9 @@ package com.example.benne.daisyapp2.playback
 
 import android.os.*
 import android.support.v4.media.session.*
+import android.util.*
 import com.example.benne.daisyapp2.*
+import com.example.benne.daisyapp2.data.*
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.*
 import javax.inject.*
@@ -16,6 +18,7 @@ class PlaybackManager @Inject constructor(
     private val localPlayback: LocalPlayback,
     private val mediaNotificationManager: MediaNotificationManager)
     : LocalPlayback.PlaybackListener {
+
     val mediaSessionCallback = MediaSessionCallback()
     var listener: PlaybackServiceCallback? = null
 
@@ -41,30 +44,36 @@ class PlaybackManager @Inject constructor(
 
     override suspend fun onComplete() {
         val clip = queueManager.asyncNextPlayableClip()
-        if (clip != null) {
-            queueManager.updateMetadata()
-            localPlayback.play(clip)
-            updatePlaybackState()
-            mediaNotificationManager.startNotification()
-        }
+        clip?.let { playClip(it) }
     }
 
     suspend fun handlePlayRequest() {
         val clip = queueManager.asyncCurrentClip()
-        if (clip != null) {
-            queueManager.updateMetadata()
-            localPlayback.play(clip)
-            updatePlaybackState()
-            listener?.onPlaybackStart()
-            mediaNotificationManager.startNotification()
-        }
+        clip?.let { playClip(it) }
+    }
 
+    private fun playClip(clip: PlayableClip) {
+        queueManager.updateMetadata()
+        localPlayback.play(clip)
+    }
+
+    suspend fun handleSkipToNextRequest() {
+        Log.w("PlayableManager", "handling next")
+        val clip = queueManager.asyncNextPlayableClip()
+        Log.w("PlayableManager", "handling next clip: $clip")
+        clip?.let { playClip(it) }
+    }
+
+    suspend fun handleSkipToPreviousRequest() {
+        Log.w("PlayableManager", "handling previous")
+        val clip = queueManager.asyncPreviousPlayableClip()
+        Log.w("PlayableManager", "handling previous clip: $clip")
+        clip?.let { playClip(it) }
     }
 
     fun handlePauseRequest() {
         if (localPlayback.isPlaying) {
             localPlayback.pause()
-            updatePlaybackState()
         }
     }
 
@@ -72,34 +81,60 @@ class PlaybackManager @Inject constructor(
 
     }
 
-    private fun updatePlaybackState() {
-        val position = PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN
+    override fun onLocalPlaybackStateChanged(playbackStateCompat: Int) {
         // todo implement position
-        val state = localPlayback.state
+        val position = PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN
 
         val stateBuilder = PlaybackStateCompat
             .Builder()
             .setActions(availableActions)
-            .setState(state, 0, 1.0f)
+            .setState(playbackStateCompat, 0, 1.0f)
             //.setActiveQueueItemId()
             // todo set custom actions
         this.listener?.onPlaybackStateUpdated(stateBuilder.build())
+
+        when (playbackStateCompat) {
+            PlaybackStateCompat.STATE_PLAYING -> {
+                listener?.onPlaybackStart()
+                mediaNotificationManager.startNotification()
+            }
+            PlaybackStateCompat.STATE_STOPPED -> {
+                listener?.onPlaybackStop()
+            }
+            PlaybackStateCompat.STATE_PAUSED -> {
+            }
+        }
     }
 
     inner class MediaSessionCallback : MediaSessionCompat.Callback() {
         override fun onPlay() {
-            launch (UI) {
+
+            launch(CommonPool)  {
                 handlePlayRequest()
             }
         }
 
         override fun onPause() {
-            handlePauseRequest()
+            launch(CommonPool) {
+                handlePauseRequest()
+            }
+        }
+
+        override fun onSkipToNext() {
+            launch  {
+                handleSkipToNextRequest()
+            }
+        }
+
+        override fun onSkipToPrevious() {
+            launch {
+                handleSkipToPreviousRequest()
+            }
         }
 
         override fun onPlayFromMediaId(mediaId: String?, extras: Bundle?) {
             queueManager.currentQueueMediaId = mediaId!!
-            launch (UI) {
+            launch(UI) {
                 handlePlayRequest()
             }
         }

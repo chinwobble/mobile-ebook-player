@@ -36,6 +36,29 @@ class QueueManager @Inject constructor(
         return mediaProvider.getPlayableClip(book.location, navElement)
     }
 
+    suspend fun asyncPreviousPlayableClip(): PlayableClip? {
+        val book = currentBook
+
+        val index = book?.navElements
+            ?.indexOfFirst { it.toMediaId() == currentQueueMediaId }
+
+        if (index == 0) {
+            return null
+        }
+
+        // a next element is available
+        for (i in (index!! - 1) downTo 0) {
+            val nav = book.navElements[i]
+            val playableClip = mediaProvider.getPlayableClip(book.location, nav)
+            if (playableClip != null) {
+                currentQueueMediaId = nav.toMediaId()
+                currentNavElement = nav
+                return playableClip
+            }
+        }
+        return null
+    }
+
     suspend fun asyncNextPlayableClip(): PlayableClip? {
         val book = currentBook
 
@@ -48,6 +71,7 @@ class QueueManager @Inject constructor(
             val playableClip = mediaProvider.getPlayableClip(book.location, nav)
             if (playableClip != null) {
                 currentQueueMediaId = nav.toMediaId()
+                currentNavElement = nav
                 return playableClip
             }
         }
@@ -56,10 +80,9 @@ class QueueManager @Inject constructor(
 
     fun updateMetadata() {
         if (currentBook != null) {
-            val metadata = toMediaMetadata(currentBook!!)
+            val metadata = toMediaMetadata(currentBook!!, currentNavElement!!)
             metadataUpdateListener.onMetadataChanged(metadata)
         }
-
     }
 
     interface MetadataUpdateListener {

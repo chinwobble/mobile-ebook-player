@@ -1,20 +1,18 @@
 package com.example.benne.daisyapp2.playback
 
 import android.content.*
-import android.media.session.*
 import android.net.*
 import android.util.*
 import com.example.benne.daisyapp2.data.*
 import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.extractor.*
 import com.google.android.exoplayer2.source.*
 import com.google.android.exoplayer2.trackselection.*
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.util.*
 import kotlinx.coroutines.experimental.*
 import javax.inject.*
-import kotlin.math.*
 import android.support.v4.media.session.*
+import kotlinx.coroutines.experimental.android.*
 
 /**
  * Created by benne on 13/01/2018.
@@ -68,11 +66,12 @@ class LocalPlayback
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        runBlocking<Unit> (CommonPool) {
+        launch (UI) {
             when (playbackState) {
             // track ended play next if there is one
                 Player.STATE_ENDED -> {
                     playbackListener?.onComplete()
+                    playbackListener?.onLocalPlaybackStateChanged(state)
                 }
                 Player.STATE_READY -> {
                     if (playWhenReady) {
@@ -80,8 +79,8 @@ class LocalPlayback
                     } else {
                         state = PlaybackStateCompat.STATE_PAUSED
                     }
+                    playbackListener?.onLocalPlaybackStateChanged(state)
                 }
-
             }
         }
     }
@@ -108,7 +107,6 @@ class LocalPlayback
         }
 
         _exoPlayer!!.playWhenReady = true
-        state = PlaybackStateCompat.STATE_PLAYING
     }
 
     fun pause() {
@@ -140,5 +138,7 @@ class LocalPlayback
     }
     interface PlaybackListener {
         suspend fun onComplete()
+        // @link PlaybackStateCompat
+        fun onLocalPlaybackStateChanged(playbackStateCompat: Int)
     }
 }

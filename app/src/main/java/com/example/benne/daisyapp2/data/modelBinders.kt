@@ -2,6 +2,7 @@ package com.example.benne.daisyapp2.data.daisy202
 
 import android.os.*
 import android.support.v4.media.*
+import android.util.*
 import com.example.benne.daisyapp2.data.*
 import com.example.benne.daisyapp2.service.AudioService.Companion.ELEMENT_TYPE_KEY
 import com.example.benne.daisyapp2.service.AudioService.Companion.ELEMENT_TYPE_SUB_KEY
@@ -25,7 +26,45 @@ inline fun SmilAudioElement.toPlayableClip(path: String):PlayableClip {
     return PlayableClip(file, clipStart, clipEnd)
 }
 
-fun toMediaMetadata(book: DaisyBook): MediaMetadataCompat {
+fun toMediaMetadata(book: DaisyBook, nav: NavElement): MediaMetadataCompat {
+    var subtitle = ""
+    val isPageRef: Boolean
+    when (nav) {
+        is NavElement.PageReference -> {
+            subtitle = nav.label
+            isPageRef = true
+        }
+        is NavElement.HeadingReference -> {
+            subtitle = nav.label
+            isPageRef = false
+        }
+        else -> {
+            isPageRef = false
+        }
+    }
+
+    if (isPageRef || subtitle.toLowerCase() == "page break") {
+        val indexInEntireNav = book.navElements
+            .indexOfFirst { it.toMediaId() == nav.toMediaId() }
+
+        // walk nav element until heading ref is found
+        val heading = book.navElements
+            .take(indexInEntireNav)
+            .findLast { it is NavElement.HeadingReference } as NavElement.HeadingReference
+
+        // get all the page references under this heading
+        val pagesInSameHeading = book.navElements
+            .dropWhile { it.toMediaId() != heading.toMediaId() }
+            .drop(1) // drop the heading too
+            .takeWhile { it is NavElement.PageReference }
+
+        val indexInHeadingRef =
+            pagesInSameHeading.indexOfFirst { it.toMediaId() == nav.toMediaId() }
+
+        subtitle = "${heading.label} - ${indexInHeadingRef + 1} / ${pagesInSameHeading.count()}"
+
+    }
+
     return MediaMetadataCompat.Builder()
         .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, book.toMediaId())
         //.putString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE, source)
@@ -37,8 +76,8 @@ fun toMediaMetadata(book: DaisyBook): MediaMetadataCompat {
         .putString(MediaMetadataCompat.METADATA_KEY_TITLE, book.metadata.title)
         //.putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, trackNumber)
         //.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, totalTrackCount)
-        .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION, "")
-        .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, "")
+        //.putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_DESCRIPTION, subtitle)
+        .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, subtitle)
         .build()
 }
 
