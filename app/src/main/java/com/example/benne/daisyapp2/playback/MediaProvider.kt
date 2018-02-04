@@ -60,8 +60,9 @@ class MediaProvider @Inject constructor(
         return matched?.let {
             val audioRef = it.audio?.toPlayableClip(filePath)
 
-            val audioRef2 = it.takeIf { audioRef == null }?.
-                let { it.nestedSeq.first().audioReferences.toPlayableClip(filePath) }
+            val audioRef2 = it
+                .takeIf { audioRef == null }
+                ?.let { it.nestedSeq.first().audioReferences.toPlayableClip(filePath) }
 
             audioRef ?: audioRef2
         }

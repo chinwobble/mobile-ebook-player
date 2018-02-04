@@ -50,6 +50,7 @@ class MediaNotificationManager
                 stopNotification()
             } else {
                 val notification = createNotification()
+
                 if (notification != null) {
                     mNotificationManager.notify(NOTIFICATION_ID, notification)
                 }
@@ -60,6 +61,7 @@ class MediaNotificationManager
             mMetadata = metadata
             Log.d(TAG, "Received new metadata $metadata")
             val notification = createNotification()
+
             if (notification != null) {
                 mNotificationManager.notify(NOTIFICATION_ID, notification)
             }
@@ -254,7 +256,7 @@ class MediaNotificationManager
                 .setMediaSession(mSessionToken))
             .setDeleteIntent(mStopIntent)
             //.setColor(mNotificationColor)
-            .setSmallIcon(R.drawable.ic_menu_share)
+            .setSmallIcon(R.drawable.ic_book)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setOnlyAlertOnce(true)
             .setContentIntent(createContentIntent(description))

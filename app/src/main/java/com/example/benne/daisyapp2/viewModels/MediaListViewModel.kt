@@ -3,6 +3,7 @@ package com.example.benne.daisyapp2.viewModels
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.databinding.*
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem
@@ -14,12 +15,25 @@ import com.example.benne.daisyapp2.service.AudioService.Companion.MEDIA_ROOT
 class MediaListViewModel : ViewModel() {
     val currentSelection: LiveData<String>
     val children: LiveData<List<MediaItem>>
+    val listRefreshing: ObservableBoolean
 
     init {
         currentSelection = MutableLiveData<String>()
         currentSelection.value = MEDIA_ROOT
         children = MutableLiveData<List<MediaItem>>()
+        listRefreshing = ObservableBoolean()
+            .also { it.set(false) }
         children.value = emptyList()
+    }
+
+    fun startRefreshing() {
+        listRefreshing.set(true)
+        listRefreshing.notifyChange()
+    }
+
+    fun finishRefreshing() {
+        listRefreshing.set(false)
+        listRefreshing.notifyChange()
     }
 
     fun setSelectedItem(mediaId: String) {

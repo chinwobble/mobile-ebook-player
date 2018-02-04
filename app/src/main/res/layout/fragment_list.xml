@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/media_items_rv"
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="listener"
+            type="com.example.benne.daisyapp2.ui.BookListUserActionListener"
+            />
+        <variable
+            name="viewModel"
+            type="com.example.benne.daisyapp2.viewModels.MediaListViewModel"
+            />
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshing="@{viewModel.listRefreshing}"
+            app:onRefreshListener="@{() -> listener.onBookListRefresh()}"
+            >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/media_items_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+</layout>

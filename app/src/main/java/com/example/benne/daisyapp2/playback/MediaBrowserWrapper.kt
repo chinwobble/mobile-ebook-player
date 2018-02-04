@@ -59,7 +59,7 @@ class MediaBrowserWrapper(
 
 
 
-        override fun onConnected() {
+    override fun onConnected() {
         super.onConnected()
         val token = _mediaBrowser.sessionToken
 
@@ -68,29 +68,32 @@ class MediaBrowserWrapper(
         MediaControllerCompat.setMediaController(activity, _mediaController)
 
         this.viewModel.currentSelection.observe(this.activity,
-                Observer<String> { t ->
-                    if (!_mediaBrowser.isConnected) {
-                        return@Observer
-                    }
+            Observer<String> { t ->
+                if (!_mediaBrowser.isConnected) {
+                    return@Observer
+                }
 
-                    try {
-                        _mediaBrowser.unsubscribe(t!!)
-                    } catch (ex: Exception) { }
+                try {
+                    _mediaBrowser.unsubscribe(t!!)
+                } catch (ex: Exception) { }
 
-                    if (t == MEDIA_ROOT) {
-                        _mediaBrowser.subscribe(t, object : MediaBrowserCompat.SubscriptionCallback() {
-                            override fun onChildrenLoaded(parentId: String, children: MutableList<MediaItem>) {
-                                viewModel.updateItems(children)
-                            }
-                        })
-                    }
-                    else {
-                        // check if current item is browsable
-                        if (activity is MainActivity) {
-                            _mediaBrowser.subscribe(t!!, activity.mediaBrowserCallBack)
+                if (t == MEDIA_ROOT) {
+                    viewModel.startRefreshing()
+                    _mediaBrowser.subscribe(t, object : MediaBrowserCompat.SubscriptionCallback() {
+                        override fun onChildrenLoaded(parentId: String, children: MutableList<MediaItem>) {
+                            viewModel.updateItems(children)
+                            viewModel.finishRefreshing()
                         }
+                    })
+                }
+                else {
+                    // check if current item is browsable
+                    if (activity is MainActivity) {
+                        _mediaBrowser.subscribe(t!!, activity.mediaBrowserCallBack)
+                        viewModel.finishRefreshing()
                     }
                 }
+            }
         )
     }
 }
