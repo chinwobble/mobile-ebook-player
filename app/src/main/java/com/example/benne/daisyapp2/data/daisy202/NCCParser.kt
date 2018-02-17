@@ -37,7 +37,7 @@ object NCCParser {
         return body.children()
             .map {
                 when (it.tagName()) {
-                    in arrayOf("h1", "h2") ->
+                    in arrayOf("h1", "h2", "h3", "h4", "h5", "h6") ->
                         NavElement.HeadingReference(
                             it.id(),
                             it.selectFirst("a")

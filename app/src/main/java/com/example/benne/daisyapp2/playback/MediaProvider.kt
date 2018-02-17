@@ -28,6 +28,7 @@ class MediaProvider @Inject constructor(
         filePath: String,
         navElement: NavElement): PlayableClip? {
 
+        Log.d("getPlayableClip", navElement.toString())
         val smilFile: String
         val fragment: String
         when (navElement) {
@@ -55,14 +56,15 @@ class MediaProvider @Inject constructor(
                 .takeIf { maybeMatchedByParId == null }
                 ?.firstOrNull { it.text.id == fragment }
 
-        val matched = maybeMatchedByParId ?: maybeMatchedByTextId
+        val matchedParElement = maybeMatchedByParId ?: maybeMatchedByTextId
 
-        return matched?.let {
+        return matchedParElement?.let {
+            Log.w("matched par element", it.toString())
             val audioRef = it.audio?.toPlayableClip(filePath)
 
             val audioRef2 = it
                 .takeIf { audioRef == null }
-                ?.let { it.nestedSeq.first().audioReferences.toPlayableClip(filePath) }
+                ?.let { it.nestedSeq.firstOrNull()?.audioReferences?.toPlayableClip(filePath) }
 
             audioRef ?: audioRef2
         }

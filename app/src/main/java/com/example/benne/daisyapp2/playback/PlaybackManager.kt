@@ -58,9 +58,9 @@ class PlaybackManager @Inject constructor(
     }
 
     suspend fun handleSkipToNextRequest() {
-        Log.w("PlayableManager", "handling next")
+        Log.d("PlayableManager", "handling next")
         val clip = queueManager.asyncNextPlayableClip()
-        Log.w("PlayableManager", "handling next clip: $clip")
+        Log.d("PlayableManager", "handling next clip: $clip")
         clip?.let { playClip(it) }
     }
 

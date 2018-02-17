@@ -61,7 +61,7 @@ fun toMediaMetadata(book: DaisyBook, nav: NavElement): MediaMetadataCompat {
         val indexInHeadingRef =
             pagesInSameHeading.indexOfFirst { it.toMediaId() == nav.toMediaId() }
 
-        subtitle = "${heading.label} - ${indexInHeadingRef + 1} / ${pagesInSameHeading.count()}"
+        subtitle = "${heading.label} - ${indexInHeadingRef + 2} / ${pagesInSameHeading.count()}"
 
     }
 
