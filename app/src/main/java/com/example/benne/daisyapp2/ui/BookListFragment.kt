@@ -40,7 +40,9 @@ class BookListFragment
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _viewModel = ViewModelProviders.of(activity).get(MediaListViewModel::class.java)
+        _viewModel = ViewModelProviders
+            .of(activity)
+            .get(MediaListViewModel::class.java)
 
         //set the media item
         //val rootView = inflater.inflate(R.layout.fragment_list, container, false)
