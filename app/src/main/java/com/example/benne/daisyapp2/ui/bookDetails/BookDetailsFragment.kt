@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.bookDetails
 
 import android.annotation.*
 import android.arch.lifecycle.*
@@ -59,6 +59,7 @@ class BookDetailsFragment() : Fragment() {
     private fun onPlaySectionCommand(mediaItem: MediaBrowserCompat.MediaItem) {
         mediaBrowserWrapper!!.playSection(mediaItem.mediaId!!)
     }
+
 
     companion object {
         val TAG: String = BookDetailsFragment.javaClass.canonicalName

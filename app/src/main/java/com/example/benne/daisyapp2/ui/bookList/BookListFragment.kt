@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.bookList
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.*
+import com.example.benne.daisyapp2.ui.*
 import com.example.benne.daisyapp2.viewModels.MediaListViewModel
 import io.reactivex.internal.operators.observable.*
 

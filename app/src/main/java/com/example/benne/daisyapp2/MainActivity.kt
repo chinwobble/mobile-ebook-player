@@ -4,8 +4,10 @@ import android.arch.lifecycle.*
 import android.os.*
 import android.support.v4.media.*
 import com.example.benne.daisyapp2.playback.*
-import com.example.benne.daisyapp2.service.AudioService.Companion.MEDIA_ROOT
+import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
 import com.example.benne.daisyapp2.ui.*
+import com.example.benne.daisyapp2.ui.bookDetails.*
+import com.example.benne.daisyapp2.ui.bookList.*
 import com.example.benne.daisyapp2.viewModels.*
 import android.support.design.R as AR
 

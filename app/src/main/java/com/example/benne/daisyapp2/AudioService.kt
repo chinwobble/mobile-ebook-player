@@ -1,11 +1,10 @@
-package com.example.benne.daisyapp2.service
+package com.example.benne.daisyapp2
 
 import android.app.*
 import android.content.*
 import android.os.Bundle
 import android.support.v4.media.*
 import android.support.v4.media.session.*
-import com.example.benne.daisyapp2.*
 import com.example.benne.daisyapp2.data.daisy202.*
 import com.example.benne.daisyapp2.di.*
 import com.example.benne.daisyapp2.playback.*

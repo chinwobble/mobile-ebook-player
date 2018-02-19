@@ -10,8 +10,6 @@ import android.support.v4.media.*
 import android.support.v4.media.app.NotificationCompat.MediaStyle
 import android.support.v4.media.session.*
 import android.util.*
-import com.example.benne.daisyapp2.service.*
-import com.example.benne.daisyapp2.R
 import javax.inject.*
 import android.R as AR
 /**

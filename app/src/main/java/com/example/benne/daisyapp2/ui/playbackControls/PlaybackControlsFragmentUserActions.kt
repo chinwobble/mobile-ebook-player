@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.playbackControls
 
 /**
  * Created by benne on 17/01/2018.

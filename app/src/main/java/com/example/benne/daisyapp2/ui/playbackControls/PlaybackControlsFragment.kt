@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.playbackControls
 
 import android.os.*
 import android.support.v4.app.*

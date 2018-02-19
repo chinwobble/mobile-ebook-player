@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.bookList
 
 import android.content.*
 import android.support.v4.media.*
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.*
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.*
+import com.example.benne.daisyapp2.ui.*
 
 /**
  * Created by benne on 6/01/2018.

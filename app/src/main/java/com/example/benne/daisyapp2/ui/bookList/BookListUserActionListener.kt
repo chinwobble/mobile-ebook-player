@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.bookList
 
 /**
  * Created by benne on 4/02/2018.

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="listener"
-            type="com.example.benne.daisyapp2.ui.BookListUserActionListener"
+            type="com.example.benne.daisyapp2.ui.bookList.BookListUserActionListener"
             />
         <variable
             name="viewModel"

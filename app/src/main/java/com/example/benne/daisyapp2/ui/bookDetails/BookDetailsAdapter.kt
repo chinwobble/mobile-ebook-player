@@ -1,14 +1,13 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.bookDetails
 
 import android.support.v4.media.*
 import android.support.v7.widget.*
 import android.view.*
-import android.widget.*
-import com.example.benne.daisyapp2.*
 import com.example.benne.daisyapp2.data.daisy202.*
-import com.example.benne.daisyapp2.service.AudioService.Companion.ELEMENT_TYPE_KEY
+import com.example.benne.daisyapp2.AudioService.Companion.ELEMENT_TYPE_KEY
 import android.view.LayoutInflater
 import com.example.benne.daisyapp2.databinding.*
+import com.example.benne.daisyapp2.ui.*
 import com.example.benne.daisyapp2.viewModels.*
 
 

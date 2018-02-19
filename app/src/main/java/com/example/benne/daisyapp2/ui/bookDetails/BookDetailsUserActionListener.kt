@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.ui
+package com.example.benne.daisyapp2.ui.bookDetails
 
 import android.support.v4.media.*
 import com.example.benne.daisyapp2.dataBindings.*

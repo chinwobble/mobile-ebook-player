@@ -1,6 +1,5 @@
 package com.example.benne.daisyapp2.playback
 
-import android.app.Activity
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.Observer
@@ -8,12 +7,12 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.content.ComponentName
 import android.support.v4.media.MediaBrowserCompat
 import com.example.benne.daisyapp2.MainActivity
-import com.example.benne.daisyapp2.service.AudioService
+import com.example.benne.daisyapp2.AudioService
 import com.example.benne.daisyapp2.viewModels.MediaListViewModel
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.session.*
 import android.support.v7.app.*
-import com.example.benne.daisyapp2.service.AudioService.Companion.MEDIA_ROOT
+import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
 
 /**
  * Created by benne on 5/01/2018.

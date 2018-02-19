@@ -4,10 +4,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.databinding.*
-import android.os.Bundle
-import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem
-import com.example.benne.daisyapp2.service.AudioService.Companion.MEDIA_ROOT
+import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
 
 /**
  * Created by benne on 5/01/2018.

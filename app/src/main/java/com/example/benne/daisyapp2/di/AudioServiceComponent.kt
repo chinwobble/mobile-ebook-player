@@ -1,7 +1,6 @@
 package com.example.benne.daisyapp2.di
 
-import com.example.benne.daisyapp2.playback.*
-import com.example.benne.daisyapp2.service.*
+import com.example.benne.daisyapp2.*
 import dagger.*
 import javax.inject.*
 
