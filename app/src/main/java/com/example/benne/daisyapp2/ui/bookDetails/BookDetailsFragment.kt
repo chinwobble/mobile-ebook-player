@@ -62,6 +62,6 @@ class BookDetailsFragment() : Fragment() {
 
 
     companion object {
-        val TAG: String = BookDetailsFragment.javaClass.canonicalName
+        val TAG: String = BookDetailsFragment::class.java.canonicalName
     }
 }

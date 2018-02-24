@@ -36,7 +36,7 @@
 
             app:cardElevation="8dp">
 
-            <fragment android:name="com.example.benne.daisyapp2.ui.PlaybackControlsFragment"
+            <fragment android:name="com.example.benne.daisyapp2.ui.playbackControls.PlaybackControlsFragment"
                 android:id="@+id/fragment_playback_controls"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -221,8 +221,8 @@ class MediaNotificationManager
 
         val description = mMetadata!!.description
 
-        var fetchArtUrl: String? = null
-        var art: Bitmap? = null
+        val fetchArtUrl: String? = null
+//        var art: Bitmap? = null
 //        if (description.iconUri != null) {
 //            // This sample assumes the iconUri will be a valid URL formatted String, but
 //            // it can actually be any valid Android Uri formatted String.
@@ -359,7 +359,7 @@ class MediaNotificationManager
     }
 
     companion object {
-        private val TAG = MediaNotificationManager.javaClass.toString()
+        private val TAG = MediaNotificationManager::class.java.canonicalName
 
         private val CHANNEL_ID = "com.example.android.uamp.MUSIC_CHANNEL_ID"
 

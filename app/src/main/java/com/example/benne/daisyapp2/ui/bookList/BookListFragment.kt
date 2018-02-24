@@ -20,10 +20,7 @@ import io.reactivex.internal.operators.observable.*
  * Created by benne on 6/01/2018.
  */
 class BookListFragment
-    : Fragment()
-    , BookListUserActionListener {
-
-
+    : Fragment() {
     private lateinit var _viewModel: MediaListViewModel
     private lateinit var _bookListAdapter: BookListAdapter
 
@@ -33,12 +30,6 @@ class BookListFragment
 //        this.viewModel.setSelectedItem("123")
 //        RecyclerView.Adapter
 //    }
-
-    override fun onBookListRefresh() {
-        val a = 1+1
-        _viewModel.finishRefreshing()
-        // todo move to viewModel command
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _viewModel = ViewModelProviders
@@ -53,13 +44,13 @@ class BookListFragment
                 R.layout.fragment_list,
                 container,
                 false)
+        binding.viewModel = _viewModel
+        binding.listener = _viewModel
 
         val rootView = binding.root
-        binding.viewModel = _viewModel
-
-        binding.listener = this
 
         val recyclerView = rootView.findViewById(R.id.media_items_rv) as RecyclerView
+
         _bookListAdapter = BookListAdapter(activity, emptyList())
         recyclerView.adapter = _bookListAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -67,12 +58,6 @@ class BookListFragment
         recyclerView.addItemDecoration(
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
-
-        _viewModel.children.observe(this, Observer {t ->
-            if (t != null) {
-                _bookListAdapter.setItems(t)
-            }
-        })
 
         ItemClickSupport.addTo(recyclerView)
             .setOnItemClickListener(object : ItemClickSupport.OnItemClickListener {

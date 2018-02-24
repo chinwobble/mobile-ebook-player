@@ -56,7 +56,15 @@ class MediaBrowserWrapper(
             .playFromMediaId(mediaId, null)
     }
 
+    fun getPLaybackState(): PlaybackStateCompat {
+        return _mediaController.playbackState
+    }
 
+    fun pauseSection() {
+        _mediaController
+            .transportControls
+            .pause()
+    }
 
     override fun onConnected() {
         super.onConnected()

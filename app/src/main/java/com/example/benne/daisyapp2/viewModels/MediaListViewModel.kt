@@ -6,22 +6,29 @@ import android.arch.lifecycle.ViewModel
 import android.databinding.*
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
+import com.example.benne.daisyapp2.ui.bookList.*
 
 /**
  * Created by benne on 5/01/2018.
  */
-class MediaListViewModel : ViewModel() {
+class MediaListViewModel
+    : ViewModel()
+    , BookListUserActionListener {
+
+    override fun onBookListRefresh() {
+        startRefreshing()
+    }
+
     val currentSelection: LiveData<String>
-    val children: LiveData<List<MediaItem>>
+    val children: ObservableList<MediaItem> = ObservableArrayList()
     val listRefreshing: ObservableBoolean
 
     init {
         currentSelection = MutableLiveData<String>()
         currentSelection.value = MEDIA_ROOT
-        children = MutableLiveData<List<MediaItem>>()
         listRefreshing = ObservableBoolean()
             .also { it.set(false) }
-        children.value = emptyList()
+
     }
 
     fun startRefreshing() {
@@ -40,7 +47,10 @@ class MediaListViewModel : ViewModel() {
     }
 
     fun updateItems(children: Iterable<MediaItem>) {
-        val mutableChildren = this.children as MutableLiveData<Iterable<MediaItem>>
-        mutableChildren.postValue(children)
+        with(this.children) {
+            clear()
+            addAll(children)
+            //empty.set(isEmpty())
+        }
     }
 }

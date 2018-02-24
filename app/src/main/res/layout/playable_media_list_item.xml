@@ -53,7 +53,7 @@
     </LinearLayout>
 
         <Button
-            android:id="@+id/play_button"
+            android:id="@+id/bt_play_pause"
             android:text="Play"
             android:onClick="@{(view) -> listener.onPlaySection(item)}"
             android:layout_width="wrap_content"

@@ -39,9 +39,10 @@ task clean(type: Delete) {
  **/
 ext.deps = [:]
 def versions = [:]
-versions.arch = hasProperty("ARCH_VERSION") ? getProperty("ARCH_VERSION") : "1.0.0"
+versions.arch = "1.0.0"
+versions.paging = "1.0.0-alpha4-1"
 versions.support = "26.1.0"
-versions.dagger = "2.11"
+versions.dagger = "2.14.1"
 versions.junit = "4.12"
 versions.espresso = "3.0.1"
 versions.retrofit = "2.3.0"
@@ -55,13 +56,12 @@ versions.constraint_layout = "1.0.2"
 versions.glide = "3.8.0"
 versions.timber = "4.5.1"
 versions.android_gradle_plugin = "3.0.0"
-versions.rxjava2 = "2.1.3"
-versions.rx_android = "2.0.1"
+versions.rxjava2 = "2.1.9"
+versions.rx_android = "2.0.2"
 versions.atsl_runner = "1.0.1"
 versions.atsl_rules = "1.0.1"
 versions.hamcrest = "1.3"
-versions.kotlin = "1.1.4-2"
-versions.paging = "1.0.0-alpha4-1"
+versions.kotlin = "1.2.21"
 def deps = [:]
 
 def support = [:]

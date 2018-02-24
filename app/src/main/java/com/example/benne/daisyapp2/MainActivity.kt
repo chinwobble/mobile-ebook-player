@@ -15,8 +15,8 @@ class MainActivity
     : BaseActivity()
     {
 
-    private lateinit var _mediaBrowserWrapper: MediaBrowserWrapper
-    private lateinit var _viewModel: MediaListViewModel
+    lateinit var mediaBrowserWrapper: MediaBrowserWrapper
+    lateinit var _viewModel: MediaListViewModel
 
     val mediaBrowserCallBack: MediaBrowserCompat.SubscriptionCallback =
         object : MediaBrowserCompat.SubscriptionCallback() {
@@ -29,13 +29,13 @@ class MainActivity
         _viewModel = ViewModelProviders.of(this).get(MediaListViewModel::class.java)
 
         super.onCreate(savedInstanceState)
-        _mediaBrowserWrapper = MediaBrowserWrapper(
+        mediaBrowserWrapper = MediaBrowserWrapper(
             this,
             _viewModel,
             lifecycle
         )
 
-        lifecycle.addObserver(_mediaBrowserWrapper)
+        lifecycle.addObserver(mediaBrowserWrapper)
         if (_viewModel.currentSelection.value == MEDIA_ROOT) {
             navigateToBookList()
         }
@@ -53,7 +53,7 @@ class MainActivity
 
             val bookDetailsFragment = BookDetailsFragment()
             bookDetailsFragment.mediaItems = children
-            bookDetailsFragment.mediaBrowserWrapper = _mediaBrowserWrapper
+            bookDetailsFragment.mediaBrowserWrapper = mediaBrowserWrapper
 
             supportFragmentManager
                 .beginTransaction()
