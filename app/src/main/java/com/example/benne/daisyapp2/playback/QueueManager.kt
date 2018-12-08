@@ -24,11 +24,14 @@ class QueueManager @Inject constructor(
 
     suspend fun asyncCurrentClip(): PlayableClip? {
         val books = mediaProvider.asyncGetAllBooks()
+
+        // todo handle multiple matches
         val book = books.single {
             it.toMediaId() == currentQueueMediaId
                 || it.navElements.any { it.toMediaId() == currentQueueMediaId }
         }
 
+        // todo handle multiple matches
         val navElement = book.navElements.single { it.toMediaId() == currentQueueMediaId }
 
         currentBook = book

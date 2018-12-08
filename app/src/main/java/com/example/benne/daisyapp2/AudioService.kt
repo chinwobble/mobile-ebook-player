@@ -5,11 +5,13 @@ import android.content.*
 import android.os.Bundle
 import android.support.v4.media.*
 import android.support.v4.media.session.*
+import android.util.Log
 import com.example.benne.daisyapp2.data.daisy202.*
 import com.example.benne.daisyapp2.di.*
 import com.example.benne.daisyapp2.playback.*
 import kotlinx.coroutines.experimental.*
 import javax.inject.*
+import kotlinx.coroutines.experimental.android.UI
 
 /**
  * Created by benne on 5/01/2018.
@@ -93,6 +95,7 @@ class AudioService : MediaBrowserServiceCompat(),
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // todo handle media buttons here
+        Log.d(TAG, "start command")
         return Service.START_STICKY
     }
 
@@ -104,37 +107,39 @@ class AudioService : MediaBrowserServiceCompat(),
     override fun onGetRoot(clientPackageName: String,
                            clientUid: Int,
                            rootHints: Bundle?): BrowserRoot? {
-        return MediaBrowserServiceCompat.BrowserRoot("100", null)
+        Log.d(TAG, "get root ")
+        return MediaBrowserServiceCompat.BrowserRoot(MEDIA_ROOT, null)
     }
 
     override fun onLoadChildren(parentId: String,
                                 result: Result<List<MediaBrowserCompat.MediaItem>>) {
+        Log.d(TAG, "onChildLoad $parentId")
 
-        launch(CommonPool) {
-            val books = mediaProvider.asyncGetAllBooks()
+        val books = mediaProvider.asyncGetAllBooks()
 
-            when {
-                parentId == MEDIA_ROOT ->
-                    result.sendResult(
+        when {
+            parentId == MEDIA_ROOT -> {
+                Log.d(TAG, "sending results for $parentId ${books.count()}")
+                result.sendResult(
                         books
-                            .map { toMediaItem(it) }
-                    )
+                                .map { toMediaItem(it) }
+                )
+            }
             // parentId is a book
-                books.any { it.toMediaId() == parentId } -> {
-                    val book = books
+            books.any { it.toMediaId() == parentId } -> {
+                Log.d(TAG, "sending results for $parentId ${books.count()}")
+                val book = books
                         .first { it.toMediaId() == parentId }
-                    result.sendResult(
+                result.sendResult(
                         book.navElements
-                            .map { toMediaItem(it) }
-                    )
-                }
+                                .map { toMediaItem(it) }
+                )
             }
         }
-        result.detach()
-
     }
 
     companion object {
+        private val TAG: String = AudioService::class.java.simpleName
         val MEDIA_ROOT = "mediaroot"
         val ELEMENT_TYPE_KEY = "element_type_key"
         val ELEMENT_TYPE_SUB_KEY = "element_type_sub_key"

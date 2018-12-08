@@ -16,12 +16,11 @@ import com.example.benne.daisyapp2.viewModels.*
 class PlaybackControlsFragment
     : Fragment() {
 
-    lateinit var mediaBrowserWrapper: MediaBrowserWrapper
-    lateinit var _viewModel: PlaybackControlsViewModel
+    private lateinit var viewModel: PlaybackControlsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _viewModel = ViewModelProviders
-            .of(activity)
+        viewModel = ViewModelProviders
+            .of(activity!!)
             .get(PlaybackControlsViewModel::class.java)
 
         val rootView = inflater.inflate(R.layout.fragment_playback_controls, container, false)
@@ -29,8 +28,7 @@ class PlaybackControlsFragment
         val bindings = FragmentPlaybackControlsBinding
             .bind(rootView)
 
-        bindings.listener = _viewModel
-        mediaBrowserWrapper = (super.getActivity() as MainActivity).mediaBrowserWrapper
+        bindings.listener = viewModel
         return rootView
     }
 }

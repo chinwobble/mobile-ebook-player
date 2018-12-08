@@ -20,6 +20,5 @@ class DataBoundViewHolder(
 
         bindings.setVariable(BR.item, item)
         bindings.executePendingBindings()
-
     }
 }

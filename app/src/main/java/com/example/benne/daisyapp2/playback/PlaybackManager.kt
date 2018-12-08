@@ -108,31 +108,35 @@ class PlaybackManager @Inject constructor(
 
     inner class MediaSessionCallback : MediaSessionCompat.Callback() {
         override fun onPlay() {
-
+            Log.d(TAG,"play")
             launch(CommonPool)  {
                 handlePlayRequest()
             }
         }
 
         override fun onPause() {
+            Log.d(TAG,"pause")
             launch(CommonPool) {
                 handlePauseRequest()
             }
         }
 
         override fun onSkipToNext() {
+            Log.d(TAG,"next")
             launch  {
                 handleSkipToNextRequest()
             }
         }
 
         override fun onSkipToPrevious() {
+            Log.d(TAG,"previous")
             launch {
                 handleSkipToPreviousRequest()
             }
         }
 
         override fun onPlayFromMediaId(mediaId: String?, extras: Bundle?) {
+            Log.d(TAG,"playmediaId $mediaId")
             queueManager.currentQueueMediaId = mediaId!!
             launch(UI) {
                 handlePlayRequest()
@@ -148,5 +152,8 @@ class PlaybackManager @Inject constructor(
         fun onPlaybackStop()
 
         fun onPlaybackStateUpdated(newState: PlaybackStateCompat)
+    }
+    companion object {
+        val TAG: String = AudioService::class.java.simpleName
     }
 }

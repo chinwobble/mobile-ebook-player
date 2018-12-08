@@ -1,60 +1,111 @@
 package com.example.benne.daisyapp2
 
-import android.arch.lifecycle.*
-import android.os.*
-import android.support.v4.media.*
-import com.example.benne.daisyapp2.playback.*
+import android.Manifest
+import android.app.SearchManager
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import android.view.Menu
 import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
-import com.example.benne.daisyapp2.ui.*
-import com.example.benne.daisyapp2.ui.bookDetails.*
-import com.example.benne.daisyapp2.ui.bookList.*
-import com.example.benne.daisyapp2.viewModels.*
+import com.example.benne.daisyapp2.di.InjectorUtils
+import com.example.benne.daisyapp2.ui.bookDetails.BookDetailsFragment
+import com.example.benne.daisyapp2.ui.bookList.BookListFragment
+import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
+import javax.net.ssl.ManagerFactoryParameters
 import android.support.design.R as AR
+import com.example.benne.daisyapp2.R
 
-class MainActivity
-    : BaseActivity()
-    {
+class MainActivity : AppCompatActivity() {
 
-    lateinit var mediaBrowserWrapper: MediaBrowserWrapper
-    lateinit var _viewModel: MediaListViewModel
-
-    val mediaBrowserCallBack: MediaBrowserCompat.SubscriptionCallback =
-        object : MediaBrowserCompat.SubscriptionCallback() {
-            override fun onChildrenLoaded(parentId: String, children: MutableList<MediaBrowserCompat.MediaItem>) {
-                navigateToBookDetails(children)
-            }
-        }
+    private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        _viewModel = ViewModelProviders.of(this).get(MediaListViewModel::class.java)
-
         super.onCreate(savedInstanceState)
-        mediaBrowserWrapper = MediaBrowserWrapper(
-            this,
-            _viewModel,
-            lifecycle
-        )
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        viewModel = ViewModelProviders
+                .of(this, InjectorUtils.provideMainActivityViewModel(this))
+                .get(MainActivityViewModel::class.java)
 
-        lifecycle.addObserver(mediaBrowserWrapper)
-        if (_viewModel.currentSelection.value == MEDIA_ROOT) {
-            navigateToBookList()
-        }
+        /**
+         * Observe changes to the [MainActivityViewModel.rootMediaId]. When the app starts,
+         * and the UI connects to [MusicService], this will be updated and the app will show
+         * the initial list of media items.
+         */
+        viewModel.rootMediaId.observe(this,
+                Observer<String> { rootMediaId ->
+                    if (rootMediaId != null) {
+                        if (rootMediaId == MEDIA_ROOT) {
+                            navigateToBookList()
+                        }
+                        //Log.d(TAG, "root media switched")
+                        //navigateToMediaItem(rootMediaId)
+                    }
+                })
 
-//        _viewModel.currentSelection.observe(this,
-//            Observer<String> {t ->
-//                // save selected currentQueueMediaId
-//                navigateToBookDetails()
-//            })
+        /**
+         * Observe [MainActivityViewModel.navigateToMediaItem] for [Event]s indicating
+         * the user has requested to browse to a different [MediaItemData].
+         */
+        viewModel.navigateToMediaItem.observe(this, Observer {
+            it?.getContentIfNotHandled()?.let { mediaId ->
+                Log.d(TAG, "unhandled get content")
+                navigateToMediaItem(mediaId)
+            }
+        })
     }
 
-    fun navigateToBookDetails(children: MutableList<MediaBrowserCompat.MediaItem>) {
+    override fun onStart() {
+        super.onStart()
+        val readStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (readStoragePermission == PackageManager.PERMISSION_GRANTED) {
+            // todo
+        }
+        if (readStoragePermission == PackageManager.PERMISSION_DENIED) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                requestPermissions(arrayOf(
+                        Manifest.permission.WAKE_LOCK,
+                        Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        if (Intent.ACTION_SEARCH == intent?.action) {
+            val query = intent.getStringExtra(SearchManager.QUERY)
+            Log.d(TAG, "search query received $query")
+
+        }
+        super.onNewIntent(intent)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            0 -> {
+                val readStorageResult = grantResults.first()
+                if (readStorageResult == PackageManager.PERMISSION_GRANTED) {
+                    // todo handle
+                } else {
+                    // todo(handle deny case)
+                }
+            }
+        }
+    }
+
+    fun navigateToMediaItem(mediaId: String) {
+        Log.d(TAG, "navigate to media item $mediaId")
         val frag = supportFragmentManager.fragments.lastOrNull()
-        if (frag != null && frag !is BookDetailsFragment) {
-
-            val bookDetailsFragment = BookDetailsFragment()
-            bookDetailsFragment.mediaItems = children
-            bookDetailsFragment.mediaBrowserWrapper = mediaBrowserWrapper
-
+        //if (frag != null && frag !is BookDetailsFragment) {
+            val bookDetailsFragment = BookDetailsFragment.newInstance(mediaId)
+            //bookDetailsFragment.mediaItems = children
             supportFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(
@@ -66,7 +117,7 @@ class MainActivity
                     bookDetailsFragment)
                 .addToBackStack(null)
                 .commit()
-        }
+        //}
     }
 
     fun navigateToBookList() {
@@ -78,6 +129,7 @@ class MainActivity
 //        if (fragment == null || !TextUtils.equals(fragment.currentQueueMediaId, currentQueueMediaId)) {
 //            fragment = MediaBrowserFragment()
 //            fragment.currentQueueMediaId = currentQueueMediaId
+
         supportFragmentManager
             .beginTransaction()
             .replace(
@@ -92,8 +144,8 @@ class MainActivity
 //        }
     }
 
-    interface MediaBrowserListener {
-        val mediaBrowserCallBack: MediaBrowserCompat.SubscriptionCallback
+    companion object {
+        val TAG: String = MainActivity::class.java.simpleName
     }
 
 }

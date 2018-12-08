@@ -16,9 +16,9 @@ class MediaProvider @Inject constructor(
 ) {
     private var books: Iterable<DaisyBook> = emptyList()
 
-    suspend fun asyncGetAllBooks(): Iterable<DaisyBook> {
+    fun asyncGetAllBooks(): Iterable<DaisyBook> {
         if (books.count() == 0) {
-            books = fileService.getDaisyBooks().await()
+            books = fileService.getDaisyBooks()
         }
 
         return books
@@ -66,7 +66,12 @@ class MediaProvider @Inject constructor(
                 .takeIf { audioRef == null }
                 ?.let { it.nestedSeq.firstOrNull()?.audioReferences?.toPlayableClip(filePath) }
 
-            audioRef ?: audioRef2
+            val retVal = audioRef ?: audioRef2
+            Log.d(TAG, "Get playable clip found: ${retVal?.toString()}")
+            return retVal
         }
+    }
+    companion object {
+        val TAG: String = MediaProvider::class.java.simpleName
     }
 }

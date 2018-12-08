@@ -18,9 +18,12 @@ import kotlinx.coroutines.experimental.android.*
  * Created by benne on 13/01/2018.
  */
 class LocalPlayback
-    @Inject constructor(
-    private val applicationContext: Context) :
+    @Inject constructor(private val applicationContext: Context) :
+
     Player.EventListener {
+    override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int) {
+
+    }
 
     val isPlaying: Boolean
         get() = state == PlaybackStateCompat.STATE_PLAYING
@@ -58,10 +61,6 @@ class LocalPlayback
     }
 
     override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
-
-    }
-
-    override fun onTimelineChanged(timeline: Timeline?, manifest: Any?) {
 
     }
 

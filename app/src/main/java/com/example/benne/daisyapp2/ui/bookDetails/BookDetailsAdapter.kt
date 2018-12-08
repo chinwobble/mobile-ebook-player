@@ -19,7 +19,7 @@ class BookDetailsAdapter(
     private val vm: BookDetailsViewModel)
     : RecyclerView.Adapter<DataBoundViewHolder>() {
 
-    private val _items: List<MediaBrowserCompat.MediaItem>
+    private var _items: List<MediaBrowserCompat.MediaItem>
     init {
         val heading = NavElement.HeadingReference::class.java.canonicalName
         _items = items
@@ -27,6 +27,11 @@ class BookDetailsAdapter(
                 .description
                 .extras!!
                 .getString(ELEMENT_TYPE_KEY) == heading }
+    }
+
+    fun setItems(items: List<MediaBrowserCompat.MediaItem>) {
+        _items = items
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

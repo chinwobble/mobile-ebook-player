@@ -19,14 +19,15 @@
         android:layout_height="match_parent">
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             app:refreshing="@{viewModel.listRefreshing}"
             app:onRefreshListener="@{() -> listener.onBookListRefresh()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             >
 
+            <!--app:items="@{viewModel.children}"-->
         <android.support.v7.widget.RecyclerView
-            app:items="@{viewModel.children}"
+
             android:id="@+id/media_items_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

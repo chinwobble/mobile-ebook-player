@@ -1,43 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:orientation="horizontal"
-    android:background="@color/colorPrimary"
-    android:alpha=".5"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:contentDescription="Book Icon" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <ImageView
+        android:id="@+id/albumbArt"
+        android:layout_width="@dimen/media_item_art"
+        android:layout_height="@dimen/media_item_art"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_book"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
-            <!--book title-->
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="Title"
-                tools:text="The Best Music EVAH1111 FOREVER YOUNG I'M AWESOME!!!11^H^H"
-                />
-            <TextView
-                android:id="@+id/runtime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="Runtime"
-                tools:text="The Best Music EVAH1111 FOREVER YOUNG I'M AWESOME!!!11^H^H"
-                />
+    <!--<ImageView-->
+        <!--android:id="@+id/item_state"-->
+        <!--style="@style/MediaStateIcon"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:scaleType="center"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/albumbArt"-->
+        <!--app:layout_constraintLeft_toLeftOf="@+id/albumbArt"-->
+        <!--app:layout_constraintRight_toRightOf="@+id/albumbArt"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/albumbArt"-->
+        <!--tools:ignore="ContentDescription" />-->
 
-        </LinearLayout>
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_book"
+        app:layout_constraintBottom_toBottomOf="@+id/albumbArt"
+        app:layout_constraintLeft_toLeftOf="@+id/albumbArt"
+        app:layout_constraintRight_toRightOf="@+id/albumbArt"
+        app:layout_constraintTop_toTopOf="@+id/albumbArt"
+        tools:ignore="ContentDescription" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:layout_marginStart="@dimen/text_margin"
+        android:ellipsize="end"
+        android:maxLines="1"
+
+        app:layout_constraintBottom_toTopOf="@+id/center_guideline"
+        app:layout_constraintLeft_toRightOf="@+id/albumbArt"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="Song Title" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:ellipsize="end"
+
+        android:maxLines="1"
+        app:layout_constraintLeft_toLeftOf="@+id/title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/center_guideline"
+        tools:text="Artist" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/center_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+</android.support.constraint.ConstraintLayout>
