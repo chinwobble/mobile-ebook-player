@@ -6,20 +6,20 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.databinding.DataBindingUtil
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Menu
 import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
+import com.example.benne.daisyapp2.R
+import com.example.benne.daisyapp2.databinding.ActivityMainBinding
 import com.example.benne.daisyapp2.di.InjectorUtils
 import com.example.benne.daisyapp2.ui.bookDetails.BookDetailsFragment
 import com.example.benne.daisyapp2.ui.bookList.BookListFragment
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
-import javax.net.ssl.ManagerFactoryParameters
 import android.support.design.R as AR
-import com.example.benne.daisyapp2.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
         viewModel = ViewModelProviders

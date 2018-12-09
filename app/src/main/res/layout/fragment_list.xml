@@ -6,10 +6,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="listener"
-            type="com.example.benne.daisyapp2.ui.bookList.BookListUserActionListener"
-            />
-        <variable
             name="viewModel"
             type="com.example.benne.daisyapp2.viewModels.MediaListViewModel"
             />
@@ -20,14 +16,13 @@
 
         <android.support.v4.widget.SwipeRefreshLayout
             app:refreshing="@{viewModel.listRefreshing}"
-            app:onRefreshListener="@{() -> listener.onBookListRefresh()}"
+            app:onRefreshListener="@{() -> viewModel.onBookListRefresh()}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
 
             <!--app:items="@{viewModel.children}"-->
         <android.support.v7.widget.RecyclerView
-
             android:id="@+id/media_items_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -83,13 +83,16 @@ class MainActivityViewModel(private val mediaSessionConnection: MediaSessionConn
         }
     }
 
-    class Factory(private val mediaSessionConnection: MediaSessionConnection
-    ) : ViewModelProvider.NewInstanceFactory() {
+    class Factory(private val mediaSessionConnection: MediaSessionConnection)
+        : ViewModelProvider.NewInstanceFactory() {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return MainActivityViewModel(mediaSessionConnection) as T
         }
     }
+
+    companion object {
+        private const val TAG = "MainActivityVM"
+    }
 }
 
-private const val TAG = "MainActivitytVM"

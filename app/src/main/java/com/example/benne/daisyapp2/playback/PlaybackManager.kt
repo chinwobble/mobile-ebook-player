@@ -5,8 +5,8 @@ import android.support.v4.media.session.*
 import android.util.*
 import com.example.benne.daisyapp2.*
 import com.example.benne.daisyapp2.data.*
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.android.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.android.*
 import javax.inject.*
 
 
@@ -109,28 +109,28 @@ class PlaybackManager @Inject constructor(
     inner class MediaSessionCallback : MediaSessionCompat.Callback() {
         override fun onPlay() {
             Log.d(TAG,"play")
-            launch(CommonPool)  {
+            GlobalScope.launch(Dispatchers.Main) {
                 handlePlayRequest()
             }
         }
 
         override fun onPause() {
             Log.d(TAG,"pause")
-            launch(CommonPool) {
+            GlobalScope.launch(Dispatchers.Main) {
                 handlePauseRequest()
             }
         }
 
         override fun onSkipToNext() {
             Log.d(TAG,"next")
-            launch  {
+            GlobalScope.launch(Dispatchers.Main) {
                 handleSkipToNextRequest()
             }
         }
 
         override fun onSkipToPrevious() {
             Log.d(TAG,"previous")
-            launch {
+            GlobalScope.launch(Dispatchers.Main) {
                 handleSkipToPreviousRequest()
             }
         }
@@ -138,7 +138,7 @@ class PlaybackManager @Inject constructor(
         override fun onPlayFromMediaId(mediaId: String?, extras: Bundle?) {
             Log.d(TAG,"playmediaId $mediaId")
             queueManager.currentQueueMediaId = mediaId!!
-            launch(UI) {
+            GlobalScope.launch(Dispatchers.Main) {
                 handlePlayRequest()
             }
         }

@@ -69,7 +69,7 @@ class BookDetailsFragment() : Fragment() {
         val searchView = menu!!.findItem(R.id.search).actionView as SearchView
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(activity!!.componentName))
-        searchView.setOnQueryTextListener()
+        // searchView.setOnQueryTextListener()
         // https://stackoverflow.com/questions/30398247/how-to-filter-a-recyclerview-with-a-searchview
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -90,10 +90,9 @@ class BookDetailsFragment() : Fragment() {
 
 
     companion object {
-        val TAG: String = BookDetailsFragment::class.java.canonicalName
+        val TAG: String = BookDetailsFragment::class.java.canonicalName!!
         private val MEDIA_ID_ARG = "MEDIA_ID_ARG"
         fun newInstance(mediaId: String): BookDetailsFragment {
-
             return BookDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(MEDIA_ID_ARG, mediaId)

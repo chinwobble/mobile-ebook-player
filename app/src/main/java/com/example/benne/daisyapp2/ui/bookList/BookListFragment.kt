@@ -1,27 +1,24 @@
 package com.example.benne.daisyapp2.ui.bookList
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.databinding.*
+import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v4.app.*
+import android.support.v4.app.Fragment
 import android.support.v4.media.MediaBrowserCompat
-import android.support.v4.widget.*
-import android.support.v7.widget.*
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.benne.daisyapp2.MediaSessionConnection
 import com.example.benne.daisyapp2.R
-import com.example.benne.daisyapp2.databinding.*
+import com.example.benne.daisyapp2.databinding.FragmentListBinding
 import com.example.benne.daisyapp2.di.InjectorUtils
-import com.example.benne.daisyapp2.ui.*
+import com.example.benne.daisyapp2.ui.ItemClickSupport
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 import com.example.benne.daisyapp2.viewModels.MediaListViewModel
-import io.reactivex.internal.operators.observable.*
 
 /**
  * Created by benne on 6/01/2018.
@@ -49,19 +46,16 @@ class BookListFragment()
             .get(MainActivityViewModel::class.java)
 
         //set the media item
-        //val rootView = inflater.inflate(R.layout.fragment_list, container, false)
         val binding = DataBindingUtil
             .inflate<FragmentListBinding>(
                 inflater,
                 R.layout.fragment_list,
                 container,
                 false)
+        binding.setLifecycleOwner(this)
+
         binding.viewModel = _viewModel
-        binding.listener = _viewModel
-
-        val rootView = binding.root
-
-        val recyclerView = rootView.findViewById(R.id.media_items_rv) as RecyclerView
+        val recyclerView = binding.mediaItemsRv
 
         _bookListAdapter = BookListAdapter(activity!!.baseContext, _viewModel.children.value!!)
 
@@ -86,11 +80,10 @@ class BookListFragment()
                     mainActivityViewModel.mediaItemClicked(_bookListAdapter.mediaItems[position])
                 }
         })
-        return rootView
+        return binding.root
     }
 
-
     companion object {
-        val TAG = "booklist_fragment"
+        const val TAG = "booklist_fragment"
     }
 }

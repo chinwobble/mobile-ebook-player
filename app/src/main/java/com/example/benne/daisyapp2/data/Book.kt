@@ -1,9 +1,6 @@
 package com.example.benne.daisyapp2.data
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.Relation
+import android.arch.persistence.room.*
 
 @Entity
 data class Book(
@@ -12,7 +9,11 @@ data class Book(
     , val name: String
 )
 
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(entity = Book::class, parentColumns = ["id"], childColumns = ["bookId"])
+    ]
+)
 data class Bookmark(
     @PrimaryKey
     val id: String

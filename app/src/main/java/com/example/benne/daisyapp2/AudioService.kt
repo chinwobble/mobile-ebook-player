@@ -9,9 +9,9 @@ import android.util.Log
 import com.example.benne.daisyapp2.data.daisy202.*
 import com.example.benne.daisyapp2.di.*
 import com.example.benne.daisyapp2.playback.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import javax.inject.*
-import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.android.*
 
 /**
  * Created by benne on 5/01/2018.

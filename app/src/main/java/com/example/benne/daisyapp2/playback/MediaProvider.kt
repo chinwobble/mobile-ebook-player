@@ -4,7 +4,7 @@ import android.util.*
 import com.example.benne.daisyapp2.data.*
 import com.example.benne.daisyapp2.data.daisy202.*
 import com.example.benne.daisyapp2.io.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import java.io.*
 import javax.inject.*
 
@@ -46,7 +46,7 @@ class MediaProvider @Inject constructor(
             }
         }
 
-        val smilPars = fileService.asyncGetSmilFile(filePath, smilFile).await()
+        val smilPars = fileService.asyncGetSmilFile(filePath, smilFile)
 
         val maybeMatchedByParId = smilPars
             .firstOrNull { it.id == fragment }

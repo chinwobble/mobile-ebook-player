@@ -17,11 +17,9 @@ import java.lang.Exception
  * Created by benne on 5/01/2018.
  */
 class MediaListViewModel(mediaSessionConnection: MediaSessionConnection)
-    : ViewModel()
-    , BookListUserActionListener {
+    : ViewModel() {
 
-    override fun onBookListRefresh() {
-        listRefreshing.postValue(false)
+    fun onBookListRefresh() {
         try {
             mediaSessionConnection.unsubscribe(MEDIA_ROOT, this.subscriptionCallback)
         } catch (e: Exception) {
@@ -34,7 +32,7 @@ class MediaListViewModel(mediaSessionConnection: MediaSessionConnection)
     private val subscriptionCallback = object : MediaBrowserCompat.SubscriptionCallback() {
         override fun onChildrenLoaded(parentId: String, children: List<MediaItem>) {
             this@MediaListViewModel.children.postValue(children)
-
+            this@MediaListViewModel.listRefreshing.postValue(false)
             Log.d(TAG, "children loaded for parent $parentId items: ${children.count()}")
 
 //            val itemsList = children.map { child ->
@@ -56,20 +54,16 @@ class MediaListViewModel(mediaSessionConnection: MediaSessionConnection)
         // it.nowPlaying.observeForever(mediaMetadataObserver)
     }
 
-    val currentSelection: MutableLiveData<String>
-    val children: MutableLiveData<List<MediaItem>>
-    val listRefreshing: MutableLiveData<Boolean>
+    val currentSelection: MutableLiveData<String> = MutableLiveData<String>()
+    val children: MutableLiveData<List<MediaItem>> = MutableLiveData<List<MediaItem>>().also {
+        it.value = listOf()
+    }
+    val listRefreshing: MutableLiveData<Boolean> = MutableLiveData<Boolean>().also {
+        it.value = false
+    }
 
     init {
-        currentSelection = MutableLiveData<String>()
-        children = MutableLiveData<List<MediaItem>>().also {
-            it.value = listOf()
-        }
-        listRefreshing = MutableLiveData<Boolean>().also {
-            it.value = false
-        }
         currentSelection.value = MEDIA_ROOT
-
     }
 
     fun setSelectedItem(mediaId: String) {

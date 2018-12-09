@@ -9,10 +9,10 @@ import com.google.android.exoplayer2.source.*
 import com.google.android.exoplayer2.trackselection.*
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.util.*
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import javax.inject.*
 import android.support.v4.media.session.*
-import kotlinx.coroutines.experimental.android.*
+import kotlinx.coroutines.android.*
 
 /**
  * Created by benne on 13/01/2018.
@@ -65,7 +65,8 @@ class LocalPlayback
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        launch (UI) {
+        GlobalScope.launch (Dispatchers.Main) {
+
             when (playbackState) {
             // track ended play next if there is one
                 Player.STATE_ENDED -> {
@@ -131,7 +132,9 @@ class LocalPlayback
                     extractorMediaSource,
                     this.clipStart,
                     this.clipEnd,
-                    true)
+                    true,
+                    true,
+                    false)
             }
         }
     }

@@ -10,14 +10,14 @@ import java.io.*
 fun DaisyBook.toMediaId() = this.metadata.hashCode().toString()
 fun NavElement.toMediaId() = this.hashCode().toString()
 
-inline fun List<SmilAudioElement>.toPlayableClip(path: String): PlayableClip {
+fun List<SmilAudioElement>.toPlayableClip(path: String): PlayableClip {
     val file = File(path, this.first().file)
     val clipStart = this.first().clipStart
     val clipEnd = this.last().clipEnd
     return PlayableClip(file, clipStart, clipEnd)
 }
 
-inline fun SmilAudioElement.toPlayableClip(path: String):PlayableClip {
+fun SmilAudioElement.toPlayableClip(path: String):PlayableClip {
     val file = File(path, this.file)
     val clipStart = this.clipStart
     val clipEnd = this.clipEnd
