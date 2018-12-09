@@ -79,8 +79,8 @@ class MediaListViewModel(mediaSessionConnection: MediaSessionConnection)
         }
     }
 
-    class Factory(private val mediaSessionConnection: MediaSessionConnection
-    ) : ViewModelProvider.NewInstanceFactory() {
+    class Factory(private val mediaSessionConnection: MediaSessionConnection)
+        : ViewModelProvider.NewInstanceFactory() {
 
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
