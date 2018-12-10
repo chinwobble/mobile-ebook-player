@@ -19,6 +19,7 @@ import android.content.Context.SEARCH_SERVICE
 import android.app.SearchManager
 import android.content.Context
 import android.widget.SearchView
+import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
 
 
 /**
@@ -29,28 +30,22 @@ class BookDetailsFragment() : Fragment() {
     private lateinit var _bookDetailsAdapter: BookDetailsAdapter
     var mediaItems: List<MediaBrowserCompat.MediaItem> = emptyList()
 
-    private lateinit var mainActivityViewModel: MainActivityViewModel
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val context = activity ?: return null
-        val mediaId = arguments!!.getString(MEDIA_ID_ARG)
+        val mediaId = BookDetailsFragmentArgs.fromBundle(arguments).mediaId
 
         _viewModel = ViewModelProviders
             .of(this, InjectorUtils.provideBookDetailsFragmentViewModel(context, mediaId))
             .get(BookDetailsViewModel::class.java)
 
-        mainActivityViewModel = ViewModelProviders
-                .of(activity!!, InjectorUtils.provideMainActivityViewModel(context))
-                .get(MainActivityViewModel::class.java)
+        val binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
 
-        val rootView = inflater.inflate(R.layout.fragment_book_details, container, false)
-        val recyclerView = rootView.findViewById(R.id.book_details_rv) as RecyclerView
-
-        subscribeToPlayableItemsCommands()
+        val recyclerView = binding.root.findViewById(R.id.book_details_rv) as RecyclerView
 
         _bookDetailsAdapter = BookDetailsAdapter(mediaItems, _viewModel)
         recyclerView.adapter = _bookDetailsAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
+
         recyclerView.addItemDecoration(
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
@@ -59,7 +54,7 @@ class BookDetailsFragment() : Fragment() {
             _bookDetailsAdapter.setItems(items!!)
         })
 
-        return rootView
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -74,20 +69,10 @@ class BookDetailsFragment() : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun subscribeToPlayableItemsCommands() {
-        _viewModel.playSectionCommand.observe(this, Observer {mediaItem ->
-            mainActivityViewModel.playMedia(mediaItem!!)
-        })
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         this.setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
     }
-
-    private fun onPlaySectionCommand(mediaItem: MediaBrowserCompat.MediaItem) {
-    }
-
 
     companion object {
         val TAG: String = BookDetailsFragment::class.java.canonicalName!!

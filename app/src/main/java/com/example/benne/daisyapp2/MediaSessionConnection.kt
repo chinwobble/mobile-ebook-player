@@ -9,6 +9,8 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.util.Log
+import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 
 
 /**
@@ -56,6 +58,33 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
 
     fun unsubscribe(parentId: String, callback: MediaBrowserCompat.SubscriptionCallback) {
         mediaBrowser.unsubscribe(parentId, callback)
+    }
+
+    /**
+     * This method takes a [MediaItemData] and does one of the following:
+     * - If the item is *not* the active item, then play it directly.
+     * - If the item *is* the active item, check whether "pause" is a permitted command. If it is,
+     *   then pause playback, otherwise send "play" to resume playback.
+     */
+    fun playMedia(mediaItem: MediaBrowserCompat.MediaItem) {
+        val nowPlaying = nowPlaying.value
+        val transportControls = transportControls
+
+        val isPrepared = playbackState.value == null ?: false
+        if (isPrepared && mediaItem.mediaId == nowPlaying?.mediaMetadata) {
+            playbackState.value?.let { playbackState ->
+                when (playbackState.state) {
+                    PlaybackStateCompat.STATE_PLAYING -> transportControls.pause()
+                    PlaybackStateCompat.STATE_PAUSED -> transportControls.play()
+                    else -> {
+                        Log.w(TAG, "Playable item clicked but neither play nor pause are enabled!" +
+                                " (mediaId=${mediaItem.mediaId})")
+                    }
+                }
+            }
+        } else {
+            transportControls.playFromMediaId(mediaItem.mediaId, null)
+        }
     }
 
     private inner class MediaBrowserConnectionCallback(private val context: Context)
@@ -113,6 +142,7 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
     }
 
     companion object {
+        val TAG: String = MediaSessionConnection.javaClass.simpleName
         // For Singleton instantiation.
         @Volatile
         private var instance: MediaSessionConnection? = null

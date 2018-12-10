@@ -9,7 +9,7 @@ import com.example.benne.daisyapp2.ui.bookList.*
 /**
  * Created by benne on 10/01/2018.
  */
-class BookDetailsViewModel (mediaSessionConnection: MediaSessionConnection, mediaId: String)
+class BookDetailsViewModel (val mediaSessionConnection: MediaSessionConnection, mediaId: String)
     : ViewModel() {
 
     val bookSections: MutableLiveData<List<MediaBrowserCompat.MediaItem>>
@@ -30,7 +30,7 @@ class BookDetailsViewModel (mediaSessionConnection: MediaSessionConnection, medi
     }
 
     fun playSection(item: MediaBrowserCompat.MediaItem) {
-        playSectionCommand.value = item
+        mediaSessionConnection.playMedia(item)
     }
 
     fun selectNavSection() {

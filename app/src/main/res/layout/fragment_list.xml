@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.benne.daisyapp2.viewModels.MediaListViewModel"
+            type="com.example.benne.daisyapp2.viewModels.BookListViewModel"
             />
     </data>
     <RelativeLayout

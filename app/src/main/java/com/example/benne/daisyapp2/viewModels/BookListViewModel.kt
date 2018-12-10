@@ -1,22 +1,17 @@
 package com.example.benne.daisyapp2.viewModels
 
-import android.app.*
 import android.arch.lifecycle.*
-import android.content.*
-import android.databinding.*
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.util.Log
 import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
 import com.example.benne.daisyapp2.MediaSessionConnection
-import com.example.benne.daisyapp2.playback.*
-import com.example.benne.daisyapp2.ui.bookList.*
 import java.lang.Exception
 
 /**
  * Created by benne on 5/01/2018.
  */
-class MediaListViewModel(mediaSessionConnection: MediaSessionConnection)
+class BookListViewModel(mediaSessionConnection: MediaSessionConnection)
     : ViewModel() {
 
     fun onBookListRefresh() {
@@ -31,8 +26,8 @@ class MediaListViewModel(mediaSessionConnection: MediaSessionConnection)
 
     private val subscriptionCallback = object : MediaBrowserCompat.SubscriptionCallback() {
         override fun onChildrenLoaded(parentId: String, children: List<MediaItem>) {
-            this@MediaListViewModel.children.postValue(children)
-            this@MediaListViewModel.listRefreshing.postValue(false)
+            this@BookListViewModel.children.postValue(children)
+            this@BookListViewModel.listRefreshing.postValue(false)
             Log.d(TAG, "children loaded for parent $parentId items: ${children.count()}")
 
 //            val itemsList = children.map { child ->
@@ -84,7 +79,7 @@ class MediaListViewModel(mediaSessionConnection: MediaSessionConnection)
 
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MediaListViewModel(mediaSessionConnection) as T
+            return BookListViewModel(mediaSessionConnection) as T
         }
     }
     companion object {

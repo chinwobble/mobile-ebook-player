@@ -6,7 +6,7 @@ import com.example.benne.daisyapp2.AudioService
 import com.example.benne.daisyapp2.MediaSessionConnection
 import com.example.benne.daisyapp2.viewModels.BookDetailsViewModel
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
-import com.example.benne.daisyapp2.viewModels.MediaListViewModel
+import com.example.benne.daisyapp2.viewModels.BookListViewModel
 
 
 /**
@@ -25,11 +25,11 @@ object InjectorUtils {
     }
 
     fun provideBookListViewFragmentViewModel(context: Context)
-            : MediaListViewModel.Factory {
+            : BookListViewModel.Factory {
         val applicationContext = context.applicationContext
 
         val mediaSessionConnection = provideMediaSessionConnection(applicationContext)
-        return MediaListViewModel.Factory(mediaSessionConnection)
+        return BookListViewModel.Factory(mediaSessionConnection)
     }
 
     fun provideBookDetailsFragmentViewModel(context: Context, mediaId: String)

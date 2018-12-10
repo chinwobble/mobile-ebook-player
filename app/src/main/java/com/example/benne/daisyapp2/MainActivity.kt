@@ -12,6 +12,9 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.setupWithNavController
 import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.ActivityMainBinding
@@ -25,11 +28,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_main)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+
+        navController = Navigation.findNavController(this, R.id.navigation_fragment)
+        //navController.navigate(R.id.fragment_book)
         setSupportActionBar(findViewById(R.id.toolbar))
+        binding.navView.setupWithNavController(navController)
         viewModel = ViewModelProviders
                 .of(this, InjectorUtils.provideMainActivityViewModel(this))
                 .get(MainActivityViewModel::class.java)
@@ -43,10 +52,9 @@ class MainActivity : AppCompatActivity() {
                 Observer<String> { rootMediaId ->
                     if (rootMediaId != null) {
                         if (rootMediaId == MEDIA_ROOT) {
-                            navigateToBookList()
+
                         }
-                        //Log.d(TAG, "root media switched")
-                        //navigateToMediaItem(rootMediaId)
+
                     }
                 })
 
@@ -57,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.navigateToMediaItem.observe(this, Observer {
             it?.getContentIfNotHandled()?.let { mediaId ->
                 Log.d(TAG, "unhandled get content")
-                navigateToMediaItem(mediaId)
+                //navigateToMediaItem(mediaId)
             }
         })
     }
@@ -99,50 +107,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    fun navigateToMediaItem(mediaId: String) {
-        Log.d(TAG, "navigate to media item $mediaId")
-        val frag = supportFragmentManager.fragments.lastOrNull()
-        //if (frag != null && frag !is BookDetailsFragment) {
-            val bookDetailsFragment = BookDetailsFragment.newInstance(mediaId)
-            //bookDetailsFragment.mediaItems = children
-            supportFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(
-                    android.R.anim.fade_in,
-                    android.R.anim.fade_out
-                )
-                .replace(
-                    R.id.fragment_container_main,
-                    bookDetailsFragment)
-                .addToBackStack(null)
-                .commit()
-        //}
-    }
-
-    fun navigateToBookList() {
-        val frag = supportFragmentManager.findFragmentByTag(BookListFragment.TAG)
-        if (frag != null) {
-            return
-        }
-
-//        if (fragment == null || !TextUtils.equals(fragment.currentQueueMediaId, currentQueueMediaId)) {
-//            fragment = MediaBrowserFragment()
-//            fragment.currentQueueMediaId = currentQueueMediaId
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.fragment_container_main,
-                BookListFragment(),
-                BookListFragment.TAG)
-            .commit()
-        // If this is not the top level media (root), we add it to the fragment back stack,
-        // so that actionbar toggle and Back will work appropriately:
-//        if (currentQueueMediaId != null) {
-//            transaction.addToBackStack(null)
-//        }
     }
 
     companion object {

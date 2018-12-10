@@ -23,12 +23,10 @@ class PlaybackControlsFragment
             .of(activity!!)
             .get(PlaybackControlsViewModel::class.java)
 
-        val rootView = inflater.inflate(R.layout.fragment_playback_controls, container, false)
+        val binding = FragmentPlaybackControlsBinding.inflate(inflater, container, false)
 
-        val bindings = FragmentPlaybackControlsBinding
-            .bind(rootView)
-
-        bindings.listener = viewModel
-        return rootView
+        binding.listener = viewModel
+        binding.setLifecycleOwner(this)
+        return binding.root
     }
 }

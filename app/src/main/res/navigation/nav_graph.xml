@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/bookListFragment">
 
+    <fragment
+        android:id="@+id/bookListFragment"
+        android:name="com.example.benne.daisyapp2.ui.bookList.BookListFragment"
+        android:label="Book List" >
+        <action
+            android:id="@+id/action_bookListFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment">
+            <argument
+                app:argType="string"
+                android:name="mediaId" />
+        </action>
+
+    </fragment>
+    <fragment
+        android:id="@+id/bookDetailsFragment"
+        android:name="com.example.benne.daisyapp2.ui.bookDetails.BookDetailsFragment"
+        android:label="Book Details">
+        <argument
+            app:argType="string"
+            android:name="mediaId" />
+    </fragment>
 </navigation>

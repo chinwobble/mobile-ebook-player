@@ -44,7 +44,7 @@ class MainActivityViewModel(private val mediaSessionConnection: MediaSessionConn
         if (clickedItem.isBrowsable) {
             browseToItem(clickedItem)
         } else {
-            playMedia(clickedItem)
+            mediaSessionConnection.playMedia(clickedItem)
         }
     }
 
@@ -56,32 +56,7 @@ class MainActivityViewModel(private val mediaSessionConnection: MediaSessionConn
         _navigateToMediaItem.value = Event(mediaItem.mediaId!!)
     }
 
-    /**
-     * This method takes a [MediaItemData] and does one of the following:
-     * - If the item is *not* the active item, then play it directly.
-     * - If the item *is* the active item, check whether "pause" is a permitted command. If it is,
-     *   then pause playback, otherwise send "play" to resume playback.
-     */
-    fun playMedia(mediaItem: MediaBrowserCompat.MediaItem) {
-        val nowPlaying = mediaSessionConnection.nowPlaying.value
-        val transportControls = mediaSessionConnection.transportControls
 
-        val isPrepared = mediaSessionConnection.playbackState.value == null ?: false
-        if (isPrepared && mediaItem.mediaId == nowPlaying?.mediaMetadata) {
-            mediaSessionConnection.playbackState.value?.let { playbackState ->
-                when (playbackState.state) {
-                    PlaybackStateCompat.STATE_PLAYING -> transportControls.pause()
-                    PlaybackStateCompat.STATE_PAUSED -> transportControls.play()
-                    else -> {
-                        Log.w(TAG, "Playable item clicked but neither play nor pause are enabled!" +
-                                " (mediaId=${mediaItem.mediaId})")
-                    }
-                }
-            }
-        } else {
-            transportControls.playFromMediaId(mediaItem.mediaId, null)
-        }
-    }
 
     class Factory(private val mediaSessionConnection: MediaSessionConnection)
         : ViewModelProvider.NewInstanceFactory() {
