@@ -1,17 +1,26 @@
 package com.example.benne.daisyapp2
 
-import android.app.*
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.media.AudioManager
 import android.os.Bundle
-import android.support.v4.media.*
-import android.support.v4.media.session.*
+import android.support.v4.media.MediaBrowserCompat
+import android.support.v4.media.MediaBrowserServiceCompat
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.MediaControllerCompat
+import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
-import com.example.benne.daisyapp2.data.daisy202.*
-import com.example.benne.daisyapp2.di.*
-import com.example.benne.daisyapp2.playback.*
-import kotlinx.coroutines.*
-import javax.inject.*
-import kotlinx.coroutines.android.*
+import com.example.benne.daisyapp2.data.daisy202.toMediaId
+import com.example.benne.daisyapp2.data.daisy202.toMediaItem
+import com.example.benne.daisyapp2.di.AudioServiceModule
+import com.example.benne.daisyapp2.di.DaggerAudioServiceComponent
+import com.example.benne.daisyapp2.playback.MediaProvider
+import com.example.benne.daisyapp2.playback.PlaybackManager
+import com.example.benne.daisyapp2.playback.QueueManager
+import javax.inject.Inject
 
 /**
  * Created by benne on 5/01/2018.
@@ -19,6 +28,7 @@ import kotlinx.coroutines.android.*
 class AudioService : MediaBrowserServiceCompat(),
     PlaybackManager.PlaybackServiceCallback {
     override fun onPlaybackStart() {
+        becomingNoisyReceiver.register()
         _session.isActive = true
 
         //mDelayedStopHandler.removeCallbacksAndMessages(null)
@@ -35,6 +45,7 @@ class AudioService : MediaBrowserServiceCompat(),
 
     override fun onPlaybackStop() {
         _session.isActive = false
+        becomingNoisyReceiver.unregister()
         stopForeground(true)
     }
 
@@ -43,8 +54,8 @@ class AudioService : MediaBrowserServiceCompat(),
     }
 
     private lateinit var _session: MediaSessionCompat
+    private lateinit var becomingNoisyReceiver: BecomingNoisyReceiver
 
-    @Inject lateinit var localPlayback: LocalPlayback
     @Inject lateinit var queueManager: QueueManager
     @Inject lateinit var mediaProvider: MediaProvider
     @Inject lateinit var playbackManager: PlaybackManager
@@ -59,7 +70,10 @@ class AudioService : MediaBrowserServiceCompat(),
             .build()
             .inject(this)
 
+        playbackManager.audioManager = this.getSystemService(AudioManager::class.java)
+
         _session = MediaSessionCompat(this, "audioService")
+        _session.isActive = true
         sessionToken = _session.sessionToken
 
         _session.setCallback(playbackManager.mediaSessionCallback)
@@ -68,6 +82,7 @@ class AudioService : MediaBrowserServiceCompat(),
             MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS
         )
 
+        becomingNoisyReceiver = BecomingNoisyReceiver(this, _session.sessionToken)
         queueManager.metadataUpdateListener = object : QueueManager.MetadataUpdateListener {
             override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
                 _session.setMetadata(metadata)
@@ -95,8 +110,9 @@ class AudioService : MediaBrowserServiceCompat(),
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // todo handle media buttons here
-        Log.d(TAG, "start command")
-        return Service.START_STICKY
+        Log.d(TAG, "start command ${intent?.action}")
+        return super.onStartCommand(intent, flags, startId)
+        //return Service.START_STICKY
     }
 
     override fun onDestroy() {
@@ -145,3 +161,33 @@ class AudioService : MediaBrowserServiceCompat(),
         val ELEMENT_TYPE_SUB_KEY = "element_type_sub_key"
     }
 }
+
+private class BecomingNoisyReceiver (private val context: Context,
+    sessionToken: MediaSessionCompat.Token)
+    : BroadcastReceiver() {
+
+        private val noisyIntentFilter = IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
+        private val controller = MediaControllerCompat(context, sessionToken)
+
+        private var registered = false
+
+        fun register() {
+            if (!registered) {
+                context.registerReceiver(this, noisyIntentFilter)
+                registered = true
+            }
+        }
+
+        fun unregister() {
+            if (registered) {
+                context.unregisterReceiver(this)
+                registered = false
+            }
+        }
+
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) {
+                controller.transportControls.pause()
+            }
+        }
+    }

@@ -359,7 +359,7 @@ class MediaNotificationManager
     }
 
     companion object {
-        private val TAG = MediaNotificationManager::class.java.canonicalName
+        private val TAG = MediaNotificationManager::class.java.simpleName
 
         private val CHANNEL_ID = "com.example.android.uamp.MUSIC_CHANNEL_ID"
 

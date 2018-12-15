@@ -24,7 +24,7 @@ class MediaProvider @Inject constructor(
         return books
     }
 
-    suspend fun getPlayableClip(
+    fun getPlayableClip(
         filePath: String,
         navElement: NavElement): PlayableClip? {
 

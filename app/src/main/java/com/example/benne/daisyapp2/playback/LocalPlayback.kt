@@ -20,10 +20,7 @@ import kotlinx.coroutines.android.*
 class LocalPlayback
     @Inject constructor(private val applicationContext: Context) :
 
-    Player.EventListener {
-    override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int) {
-
-    }
+    Player.DefaultEventListener() {
 
     val isPlaying: Boolean
         get() = state == PlaybackStateCompat.STATE_PLAYING
@@ -32,43 +29,16 @@ class LocalPlayback
     var state: Int = PlaybackStateCompat.STATE_NONE
     var playbackListener: PlaybackListener? = null
 
-    override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?) {
-
-    }
-
-    override fun onSeekProcessed() {
-
-    }
-
-    override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
-
-    }
-
-    override fun onPlayerError(error: ExoPlaybackException?) {
-
-    }
-
-    override fun onLoadingChanged(isLoading: Boolean) {
-
-    }
-
-    override fun onPositionDiscontinuity(reason: Int) {
-
-    }
-
-    override fun onRepeatModeChanged(repeatMode: Int) {
-
-    }
-
-    override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
-
-    }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+        Log.d(TAG, "state change new state: $playbackState")
         GlobalScope.launch (Dispatchers.Main) {
 
             when (playbackState) {
             // track ended play next if there is one
+                Player.STATE_BUFFERING -> {
+
+                }
                 Player.STATE_ENDED -> {
                     playbackListener?.onComplete()
                     playbackListener?.onLocalPlaybackStateChanged(state)
@@ -95,7 +65,7 @@ class LocalPlayback
     }
 
     fun play(playableClip: PlayableClip) {
-        Log.d("localplayback Play", "$playableClip")
+        Log.d(TAG, "playing $playableClip")
         val source = playableClip.toClippingMediaSource(applicationContext)
 
         val mediaIsSame =
@@ -115,6 +85,7 @@ class LocalPlayback
     }
 
     companion object {
+        val TAG = LocalPlayback::class.java.simpleName
         private fun PlayableClip.toClippingMediaSource(applicationContext: Context): MediaSource {
             // Produces DataSource instances through which media data is loaded.
             val dataSourceFactory = DefaultDataSourceFactory(

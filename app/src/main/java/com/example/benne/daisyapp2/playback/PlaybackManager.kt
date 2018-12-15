@@ -1,5 +1,7 @@
 package com.example.benne.daisyapp2.playback
 
+import android.media.AudioFocusRequest
+import android.media.AudioManager
 import android.os.*
 import android.support.v4.media.session.*
 import android.util.*
@@ -21,6 +23,25 @@ class PlaybackManager @Inject constructor(
 
     val mediaSessionCallback = MediaSessionCallback()
     var listener: PlaybackServiceCallback? = null
+    lateinit var audioManager: AudioManager
+    private val audioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange: Int ->
+        Log.d(TAG, "audio focus change $focusChange")
+        when (focusChange) {
+            AudioManager.AUDIOFOCUS_GAIN -> {
+                // handlePauseRequest()
+            }
+            AudioManager.AUDIOFOCUS_LOSS -> {
+                // Permanent loss of audio focus
+                handlePauseRequest()
+            }
+            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                handlePauseRequest()
+            }
+            AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
+
+            }
+        }
+    }
 
     private val availableActions: Long
         get() {
@@ -48,26 +69,34 @@ class PlaybackManager @Inject constructor(
     }
 
     suspend fun handlePlayRequest() {
+        Log.d(TAG, "handle play request")
         val clip = queueManager.asyncCurrentClip()
         clip?.let { playClip(it) }
     }
 
     private fun playClip(clip: PlayableClip) {
-        queueManager.updateMetadata()
-        localPlayback.play(clip)
+        val audioFocusResult = audioManager.requestAudioFocus(
+                audioFocusChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN)
+
+        if (audioFocusResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            queueManager.updateMetadata()
+            localPlayback.play(clip)
+        }
     }
 
     suspend fun handleSkipToNextRequest() {
-        Log.d("PlayableManager", "handling next")
+        Log.d(TAG, "handling next")
         val clip = queueManager.asyncNextPlayableClip()
-        Log.d("PlayableManager", "handling next clip: $clip")
+        Log.d(TAG, "handling next clip: $clip")
         clip?.let { playClip(it) }
     }
 
     suspend fun handleSkipToPreviousRequest() {
-        Log.w("PlayableManager", "handling previous")
+        Log.w(TAG, "handling previous")
         val clip = queueManager.asyncPreviousPlayableClip()
-        Log.w("PlayableManager", "handling previous clip: $clip")
+        Log.w(TAG, "handling previous clip: $clip")
         clip?.let { playClip(it) }
     }
 
@@ -102,11 +131,16 @@ class PlaybackManager @Inject constructor(
                 listener?.onPlaybackStop()
             }
             PlaybackStateCompat.STATE_PAUSED -> {
+
             }
         }
     }
 
     inner class MediaSessionCallback : MediaSessionCompat.Callback() {
+        override fun onStop() {
+            audioManager.abandonAudioFocus(audioFocusChangeListener)
+        }
+
         override fun onPlay() {
             Log.d(TAG,"play")
             GlobalScope.launch(Dispatchers.Main) {
@@ -153,7 +187,8 @@ class PlaybackManager @Inject constructor(
 
         fun onPlaybackStateUpdated(newState: PlaybackStateCompat)
     }
+
     companion object {
-        val TAG: String = AudioService::class.java.simpleName
+        val TAG: String = PlaybackManager::class.java.simpleName
     }
 }

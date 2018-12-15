@@ -16,8 +16,6 @@ class BookDetailsViewModel (val mediaSessionConnection: MediaSessionConnection, 
             = MutableLiveData<List<MediaBrowserCompat.MediaItem>>()
                 .also { it.value = listOf() }
 
-    val playSectionCommand = SingleLiveEvent<MediaBrowserCompat.MediaItem>()
-
     private val subscriptionCallback = object : MediaBrowserCompat.SubscriptionCallback() {
         override fun onChildrenLoaded(parentId: String, children: List<MediaBrowserCompat.MediaItem>) {
             Log.d(TAG, "children loaded for parent $parentId items: ${children.count()}")

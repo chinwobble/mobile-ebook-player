@@ -54,6 +54,7 @@ class BookDetailsFragment() : Fragment() {
             _bookDetailsAdapter.setItems(items!!)
         })
 
+        binding.setLifecycleOwner(this)
         return binding.root
     }
 
