@@ -44,7 +44,7 @@ class MainActivityViewModel(private val mediaSessionConnection: MediaSessionConn
         if (clickedItem.isBrowsable) {
             browseToItem(clickedItem)
         } else {
-            mediaSessionConnection.playMedia(clickedItem)
+            //mediaSessionConnection.playMedia(clickedItem)
         }
     }
 

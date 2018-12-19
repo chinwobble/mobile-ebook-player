@@ -1,6 +1,7 @@
 package com.example.benne.daisyapp2.viewModels
 
 import android.arch.lifecycle.*
+import android.os.Bundle
 import android.support.v4.media.*
 import android.util.Log
 import com.example.benne.daisyapp2.*
@@ -12,6 +13,7 @@ import com.example.benne.daisyapp2.ui.bookList.*
 class BookDetailsViewModel (val mediaSessionConnection: MediaSessionConnection, mediaId: String)
     : ViewModel() {
 
+    var bookMediaId: String? = null
     val bookSections: MutableLiveData<List<MediaBrowserCompat.MediaItem>>
             = MutableLiveData<List<MediaBrowserCompat.MediaItem>>()
                 .also { it.value = listOf() }
@@ -28,7 +30,9 @@ class BookDetailsViewModel (val mediaSessionConnection: MediaSessionConnection, 
     }
 
     fun playSection(item: MediaBrowserCompat.MediaItem) {
-        mediaSessionConnection.playMedia(item)
+        val bundle = Bundle()
+        bundle.putString("bookMediaId", bookMediaId)
+        mediaSessionConnection.playMedia(item, bundle)
     }
 
     fun selectNavSection() {

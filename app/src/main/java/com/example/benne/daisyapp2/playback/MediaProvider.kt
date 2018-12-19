@@ -14,14 +14,8 @@ import javax.inject.*
 class MediaProvider @Inject constructor(
     private val fileService: FileService
 ) {
-    private var books: Iterable<DaisyBook> = emptyList()
-
-    fun asyncGetAllBooks(): Iterable<DaisyBook> {
-        if (books.count() == 0) {
-            books = fileService.getDaisyBooks()
-        }
-
-        return books
+    val books: Iterable<DaisyBook> by lazy {
+        fileService.getDaisyBooks()
     }
 
     fun getPlayableClip(

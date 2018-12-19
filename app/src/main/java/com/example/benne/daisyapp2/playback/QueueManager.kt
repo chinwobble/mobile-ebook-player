@@ -22,8 +22,12 @@ class QueueManager @Inject constructor(
         return false
     }
 
-    suspend fun asyncCurrentClip(): PlayableClip? {
-        val books = mediaProvider.asyncGetAllBooks()
+    fun setCurrentBook(bookMediaId: String) {
+        currentBook = mediaProvider.books.find { it.toMediaId() == bookMediaId }
+    }
+
+    fun currentClip(): Pair<PlayableClip, MediaBrowserCompat.MediaItem>? {
+        val books = mediaProvider.books
 
         // todo handle multiple matches
         val book = books.single {
@@ -36,10 +40,11 @@ class QueueManager @Inject constructor(
 
         currentBook = book
         currentNavElement = navElement
-        return mediaProvider.getPlayableClip(book.location, navElement)
+        val playableClip = mediaProvider.getPlayableClip(book.location, navElement)
+        return Pair(playableClip!!, toMediaItem(navElement))
     }
 
-    suspend fun asyncPreviousPlayableClip(): PlayableClip? {
+    fun previousPlayableClip(): Pair<PlayableClip, MediaBrowserCompat.MediaItem>? {
         val book = currentBook
 
         val index = book?.navElements
@@ -56,13 +61,13 @@ class QueueManager @Inject constructor(
             if (playableClip != null) {
                 currentQueueMediaId = nav.toMediaId()
                 currentNavElement = nav
-                return playableClip
+                return Pair(playableClip, toMediaItem(nav))
             }
         }
         return null
     }
 
-    suspend fun asyncNextPlayableClip(): PlayableClip? {
+    fun nextPlayableClip(): Pair<PlayableClip, MediaBrowserCompat.MediaItem>? {
         val book = currentBook
 
         val index = book?.navElements
@@ -75,7 +80,8 @@ class QueueManager @Inject constructor(
             if (playableClip != null) {
                 currentQueueMediaId = nav.toMediaId()
                 currentNavElement = nav
-                return playableClip
+
+                return Pair(playableClip, toMediaItem(nav))
             }
         }
         return null

@@ -1,16 +1,12 @@
 package com.example.benne.daisyapp2.io
 
 import android.os.Environment
-import android.util.Log
-import com.example.ader.NCCEntry
-import com.example.benne.daisyapp2.AudioService
-import com.example.benne.daisyapp2.data.daisy202.*
-import org.jsoup.*
+import com.example.benne.daisyapp2.data.daisy202.DaisyBook
+import com.example.benne.daisyapp2.data.daisy202.NCCParser
+import com.example.benne.daisyapp2.data.daisy202.SmilParElement
+import com.example.benne.daisyapp2.data.daisy202.SmilParser
 import java.io.File
-import javax.inject.*
-import kotlinx.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.async
+import javax.inject.Inject
 
 /**
  * Created by benne on 7/01/2018.

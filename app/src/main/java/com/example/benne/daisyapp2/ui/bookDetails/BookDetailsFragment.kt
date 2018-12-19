@@ -28,21 +28,22 @@ import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
 class BookDetailsFragment() : Fragment() {
     private lateinit var _viewModel: BookDetailsViewModel
     private lateinit var _bookDetailsAdapter: BookDetailsAdapter
-    var mediaItems: List<MediaBrowserCompat.MediaItem> = emptyList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val context = activity ?: return null
-        val mediaId = BookDetailsFragmentArgs.fromBundle(arguments).mediaId
+        val bookMediaId = BookDetailsFragmentArgs.fromBundle(arguments!!).mediaId
+
 
         _viewModel = ViewModelProviders
-            .of(this, InjectorUtils.provideBookDetailsFragmentViewModel(context, mediaId))
+            .of(this, InjectorUtils.provideBookDetailsFragmentViewModel(context, bookMediaId))
             .get(BookDetailsViewModel::class.java)
 
+        _viewModel.bookMediaId = bookMediaId
         val binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
 
         val recyclerView = binding.root.findViewById(R.id.book_details_rv) as RecyclerView
 
-        _bookDetailsAdapter = BookDetailsAdapter(mediaItems, _viewModel)
+        _bookDetailsAdapter = BookDetailsAdapter(emptyList(), _viewModel)
         recyclerView.adapter = _bookDetailsAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
 
@@ -61,7 +62,7 @@ class BookDetailsFragment() : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
 
         inflater!!.inflate(R.menu.main, menu)
-        val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = activity!!.getSystemService(SearchManager::class.java)
         val searchView = menu!!.findItem(R.id.search).actionView as SearchView
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(activity!!.componentName))

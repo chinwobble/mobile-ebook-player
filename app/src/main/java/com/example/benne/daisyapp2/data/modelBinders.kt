@@ -3,8 +3,8 @@ package com.example.benne.daisyapp2.data.daisy202
 import android.os.*
 import android.support.v4.media.*
 import com.example.benne.daisyapp2.data.*
-import com.example.benne.daisyapp2.AudioService.Companion.ELEMENT_TYPE_KEY
-import com.example.benne.daisyapp2.AudioService.Companion.ELEMENT_TYPE_SUB_KEY
+import com.example.benne.daisyapp2.playback.MediaService.Companion.ELEMENT_TYPE_KEY
+import com.example.benne.daisyapp2.playback.MediaService.Companion.ELEMENT_TYPE_SUB_KEY
 import java.io.*
 
 fun DaisyBook.toMediaId() = this.metadata.hashCode().toString()

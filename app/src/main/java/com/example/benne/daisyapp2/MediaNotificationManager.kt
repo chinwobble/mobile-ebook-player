@@ -10,6 +10,7 @@ import android.support.v4.media.*
 import android.support.v4.media.app.NotificationCompat.MediaStyle
 import android.support.v4.media.session.*
 import android.util.*
+import com.example.benne.daisyapp2.playback.MediaService
 import javax.inject.*
 import android.R as AR
 /**
@@ -18,7 +19,7 @@ import android.R as AR
  * won't be killed during playback.
  */
 class MediaNotificationManager
-@Inject constructor(private val mService: AudioService) : BroadcastReceiver() {
+@Inject constructor(private val mService: MediaService) : BroadcastReceiver() {
     private var mSessionToken: MediaSessionCompat.Token? = null
     private var mController: MediaControllerCompat? = null
     private var mTransportControls: MediaControllerCompat.TransportControls? = null

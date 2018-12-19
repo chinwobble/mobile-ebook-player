@@ -2,8 +2,8 @@ package com.example.benne.daisyapp2.di
 
 import android.content.ComponentName
 import android.content.Context
-import com.example.benne.daisyapp2.AudioService
 import com.example.benne.daisyapp2.MediaSessionConnection
+import com.example.benne.daisyapp2.playback.MediaService
 import com.example.benne.daisyapp2.viewModels.BookDetailsViewModel
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 import com.example.benne.daisyapp2.viewModels.BookListViewModel
@@ -15,7 +15,7 @@ import com.example.benne.daisyapp2.viewModels.BookListViewModel
 object InjectorUtils {
     private fun provideMediaSessionConnection(context: Context): MediaSessionConnection {
         return MediaSessionConnection.getInstance(context,
-                ComponentName(context, AudioService::class.java))
+                ComponentName(context, MediaService::class.java))
     }
 
     fun provideMainActivityViewModel(context: Context): MainActivityViewModel.Factory {

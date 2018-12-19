@@ -5,25 +5,40 @@ import android.os.*
 /**
  * Created by benne on 6/01/2018.
  */
+
+// h2
+// -- h3
+// -- -- smil
+// -- -- page
 data class DaisyBook(
     val navElements: List<NavElement>,
     val metadata: DaisyBookMetadata,
     val location: String) {
     companion object {
-        fun getLevels() {
-
-        }
-
-        fun getChildren(id: String) {
-
-        }
-
-        fun getNextWithAudio() {
-
-        }
-
-        fun getPreviousWithAudio() {
-
+        fun getChildren(book: DaisyBook, id: String): Iterable<NavElement> {
+            val index = book.navElements.indexOfFirst { it.toMediaId() == id }
+            val item = book.navElements[index]
+            return when (item) {
+                is NavElement.HeadingReference -> {
+                    val nextElement = book.navElements[index + 1]
+                    return when (nextElement) {
+                        is NavElement.HeadingReference -> {
+                            book.navElements
+                                    .drop(index + 2)
+                                    .takeWhile { it is NavElement.HeadingReference
+                                            && it.level == nextElement.level }
+                        }
+                        else -> {
+                            book.navElements
+                                    .drop(index + 2)
+                                    .takeWhile { it is NavElement.PageReference }
+                        }
+                    }
+                }
+                else -> {
+                    emptyList()
+                }
+            }
         }
     }
 }

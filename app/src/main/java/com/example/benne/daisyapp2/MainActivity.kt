@@ -15,12 +15,10 @@ import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
-import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.ActivityMainBinding
 import com.example.benne.daisyapp2.di.InjectorUtils
-import com.example.benne.daisyapp2.ui.bookDetails.BookDetailsFragment
-import com.example.benne.daisyapp2.ui.bookList.BookListFragment
+import com.example.benne.daisyapp2.playback.MediaService.Companion.MEDIA_ROOT
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 import android.support.design.R as AR
 

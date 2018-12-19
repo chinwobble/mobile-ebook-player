@@ -3,6 +3,7 @@ package com.example.benne.daisyapp2
 import android.arch.lifecycle.MutableLiveData
 import android.content.ComponentName
 import android.content.Context
+import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserServiceCompat
 import android.support.v4.media.MediaMetadataCompat
@@ -66,7 +67,7 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
      * - If the item *is* the active item, check whether "pause" is a permitted command. If it is,
      *   then pause playback, otherwise send "play" to resume playback.
      */
-    fun playMedia(mediaItem: MediaBrowserCompat.MediaItem) {
+    fun playMedia(mediaItem: MediaBrowserCompat.MediaItem, extras: Bundle) {
         val nowPlaying = nowPlaying.value
         val transportControls = transportControls
 
@@ -83,7 +84,7 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
                 }
             }
         } else {
-            transportControls.playFromMediaId(mediaItem.mediaId, null)
+            transportControls.playFromMediaId(mediaItem.mediaId, extras)
         }
     }
 

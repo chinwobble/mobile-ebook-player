@@ -4,8 +4,8 @@ import android.arch.lifecycle.*
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.util.Log
-import com.example.benne.daisyapp2.AudioService.Companion.MEDIA_ROOT
 import com.example.benne.daisyapp2.MediaSessionConnection
+import com.example.benne.daisyapp2.playback.MediaService.Companion.MEDIA_ROOT
 import java.lang.Exception
 
 /**
@@ -49,7 +49,7 @@ class BookListViewModel(mediaSessionConnection: MediaSessionConnection)
         // it.nowPlaying.observeForever(mediaMetadataObserver)
     }
 
-    val currentSelection: MutableLiveData<String> = MutableLiveData<String>()
+    val currentSelection: MutableLiveData<String> = MutableLiveData()
     val children: MutableLiveData<List<MediaItem>> = MutableLiveData<List<MediaItem>>().also {
         it.value = listOf()
     }
@@ -83,6 +83,6 @@ class BookListViewModel(mediaSessionConnection: MediaSessionConnection)
         }
     }
     companion object {
-        val TAG: String = "BookListViewModel"
+        val TAG: String = BookListViewModel::class.java.simpleName
     }
 }
