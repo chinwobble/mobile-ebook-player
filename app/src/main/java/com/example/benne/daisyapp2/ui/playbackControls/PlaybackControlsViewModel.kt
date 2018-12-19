@@ -1,9 +1,7 @@
-package com.example.benne.daisyapp2.viewModels
+package com.example.benne.daisyapp2.ui.playbackControls
 
 import android.arch.lifecycle.*
 import android.databinding.*
-import android.os.*
-import com.example.benne.daisyapp2.ui.playbackControls.*
 
 /**
  * Created by benne on 19/02/2018.

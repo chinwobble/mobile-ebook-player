@@ -4,11 +4,7 @@ import android.arch.lifecycle.*
 import android.os.*
 import android.support.v4.app.*
 import android.view.*
-import com.example.benne.daisyapp2.*
-import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.*
-import com.example.benne.daisyapp2.playback.*
-import com.example.benne.daisyapp2.viewModels.*
 
 /**
  * Created by benne on 17/01/2018.

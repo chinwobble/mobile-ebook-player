@@ -4,9 +4,9 @@ import android.content.ComponentName
 import android.content.Context
 import com.example.benne.daisyapp2.MediaSessionConnection
 import com.example.benne.daisyapp2.playback.MediaService
-import com.example.benne.daisyapp2.viewModels.BookDetailsViewModel
+import com.example.benne.daisyapp2.ui.bookDetails.BookDetailsViewModel
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
-import com.example.benne.daisyapp2.viewModels.BookListViewModel
+import com.example.benne.daisyapp2.ui.bookList.BookListViewModel
 
 
 /**

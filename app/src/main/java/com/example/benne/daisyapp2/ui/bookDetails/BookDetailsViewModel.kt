@@ -1,11 +1,10 @@
-package com.example.benne.daisyapp2.viewModels
+package com.example.benne.daisyapp2.ui.bookDetails
 
 import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.v4.media.*
 import android.util.Log
 import com.example.benne.daisyapp2.*
-import com.example.benne.daisyapp2.ui.bookList.*
 
 /**
  * Created by benne on 10/01/2018.

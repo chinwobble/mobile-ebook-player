@@ -2,7 +2,6 @@ package com.example.benne.daisyapp2.ui.bookList
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.media.MediaBrowserCompat
@@ -14,12 +13,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.benne.daisyapp2.R
-import com.example.benne.daisyapp2.databinding.FragmentListBinding
+import com.example.benne.daisyapp2.databinding.FragmentBookListBinding
 import com.example.benne.daisyapp2.di.InjectorUtils
 import com.example.benne.daisyapp2.ui.ItemClickSupport
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
-import com.example.benne.daisyapp2.viewModels.BookListViewModel
 
 /**
  * Created by benne on 6/01/2018.
@@ -42,7 +39,7 @@ class BookListFragment()
             .get(MainActivityViewModel::class.java)
 
         //set the media item
-        val binding = FragmentListBinding.inflate(inflater, container, false)
+        val binding = FragmentBookListBinding.inflate(inflater, container, false)
         binding.setLifecycleOwner(this)
 
         binding.viewModel = _viewModel

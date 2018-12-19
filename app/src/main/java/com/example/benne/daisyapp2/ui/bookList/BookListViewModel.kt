@@ -1,4 +1,4 @@
-package com.example.benne.daisyapp2.viewModels
+package com.example.benne.daisyapp2.ui.bookList
 
 import android.arch.lifecycle.*
 import android.support.v4.media.MediaBrowserCompat

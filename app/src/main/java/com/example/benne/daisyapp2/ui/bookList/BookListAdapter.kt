@@ -31,7 +31,7 @@ class BookListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBoundViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemBinding =
-            MediaListItemBinding.inflate(layoutInflater, parent, false)
+                ListItemBookBinding.inflate(layoutInflater, parent, false)
         return DataBoundViewHolder(itemBinding)
     }
 

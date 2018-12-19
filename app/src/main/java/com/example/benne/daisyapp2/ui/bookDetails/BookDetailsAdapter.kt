@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import com.example.benne.daisyapp2.databinding.*
 import com.example.benne.daisyapp2.playback.MediaService.Companion.ELEMENT_TYPE_KEY
 import com.example.benne.daisyapp2.ui.*
-import com.example.benne.daisyapp2.viewModels.*
 
 
 /**
@@ -51,7 +50,7 @@ class BookDetailsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBoundViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val itemBinding = PlayableMediaListItemBinding
+        val itemBinding = ListItemPlayableMediaBinding
             .inflate(layoutInflater, parent, false)
         return DataBoundViewHolder(itemBinding)
     }

@@ -4,20 +4,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.media.MediaBrowserCompat
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.di.InjectorUtils
-import com.example.benne.daisyapp2.ui.bookList.BookListFragment
-import com.example.benne.daisyapp2.viewModels.BookDetailsViewModel
-import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
-import android.support.v4.view.MenuItemCompat.getActionView
-import android.content.Context.SEARCH_SERVICE
 import android.app.SearchManager
-import android.content.Context
 import android.widget.SearchView
 import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
 
