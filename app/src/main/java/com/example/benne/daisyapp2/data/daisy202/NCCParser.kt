@@ -30,7 +30,8 @@ object NCCParser {
         val date: String = headChildren.getAttr("dc:date")
         val publisher: String = headChildren.getAttr("dc:publisher")
         val creator: String = headChildren.getAttr("dc:creator")
-        return DaisyBookMetadata(title, date, publisher, creator)
+        val isbn: String = headChildren.getAttr("dc:source")
+        return DaisyBookMetadata(title, date, publisher, creator, isbn)
     }
 
     private fun parseNavElements(body: Element): List<NavElement> {

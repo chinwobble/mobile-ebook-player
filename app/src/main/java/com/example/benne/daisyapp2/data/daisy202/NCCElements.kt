@@ -48,7 +48,8 @@ data class DaisyBookMetadata(
     val title: String,
     val date: String,
     val publisher: String,
-    val creator: String
+    val creator: String,
+    val isbn: String?
 )
 
 open class NavElement {
