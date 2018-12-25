@@ -1,8 +1,10 @@
 package com.example.benne.daisyapp2.data.daisy202
 
+import android.annotation.SuppressLint
 import android.os.*
 import android.support.v4.media.*
 import com.example.benne.daisyapp2.data.*
+import com.example.benne.daisyapp2.playback.MEDIA_DESCRIPTION_GROUP
 import com.example.benne.daisyapp2.playback.MediaService.Companion.ELEMENT_TYPE_KEY
 import com.example.benne.daisyapp2.playback.MediaService.Companion.ELEMENT_TYPE_SUB_KEY
 import java.io.*
@@ -24,6 +26,7 @@ fun SmilAudioElement.toPlayableClip(path: String):PlayableClip {
     return PlayableClip(file, clipStart, clipEnd)
 }
 
+@SuppressLint("WrongConstant")
 fun toMediaMetadata(book: DaisyBook, nav: NavElement): MediaMetadataCompat {
     var subtitle = ""
     val isPageRef: Boolean
@@ -65,6 +68,7 @@ fun toMediaMetadata(book: DaisyBook, nav: NavElement): MediaMetadataCompat {
 
     return MediaMetadataCompat.Builder()
         .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, book.toMediaId())
+        .putString(MEDIA_DESCRIPTION_GROUP, nav.groupId)
         //.putString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE, source)
         //.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
         //.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, artist)
@@ -122,6 +126,7 @@ fun toMediaItem(nav: NavElement) : MediaBrowserCompat.MediaItem {
         }
     }
 
+    bundle.putString(MEDIA_DESCRIPTION_GROUP, nav.groupId)
     val description = MediaDescriptionCompat
         .Builder()
         .setExtras(bundle)

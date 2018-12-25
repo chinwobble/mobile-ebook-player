@@ -52,23 +52,24 @@ data class DaisyBookMetadata(
     val isbn: String?
 )
 
-open class NavElement {
+open class NavElement(val label: String, val groupId: String) {
     data class HeadingReference(
        val id: String,
-       val label: String,
+       private val mlabel: String,
        val smilFile: String,
        val fragment: String,
        val level: Byte
-    ) : NavElement()
+    ) : NavElement(mlabel, id)
 
     // page reference
     data class PageReference(
         val id: String,
-        val label: String,
+        private val mlabel: String,
         val smilFile: String,
         val fragment: String,
-        private val className: String?
-    ) : NavElement() {
+        private val className: String?,
+        private val parentId: String
+    ) : NavElement(mlabel, parentId) {
         val pageType: PageType =
             when (className?.toLowerCase()) {
                 "page-front" -> PageType.PAGE_FRONT

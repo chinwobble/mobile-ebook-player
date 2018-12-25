@@ -45,7 +45,7 @@ class BookListFragment()
         binding.viewModel = _viewModel
         val recyclerView = binding.mediaItemsRv
 
-        _bookListAdapter = BookListAdapter(activity!!.baseContext, _viewModel.children.value!!)
+        _bookListAdapter = BookListAdapter()
 
         recyclerView.adapter = _bookListAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -56,14 +56,14 @@ class BookListFragment()
 
         _viewModel.children.observe(this, Observer<List<MediaBrowserCompat.MediaItem>> { items ->
             Log.d(TAG, "observed changes to children items: ${items!!.count()}")
-            _bookListAdapter.setItems(items)
+            _bookListAdapter.items = items
         })
 
         ItemClickSupport.addTo(recyclerView)
             .setOnItemClickListener(object : ItemClickSupport.OnItemClickListener {
                 override fun onItemClicked(recyclerView: RecyclerView, position: Int, v: View) {
                     val selectedMediaId =
-                        _bookListAdapter.mediaItems[position].mediaId!!
+                        _bookListAdapter.items[position].mediaId!!
                     _viewModel.setSelectedItem(selectedMediaId)
                     val direction = BookListFragmentDirections.actionBookListFragmentToBookDetailsFragment(selectedMediaId)
                     findNavController().navigate(direction)

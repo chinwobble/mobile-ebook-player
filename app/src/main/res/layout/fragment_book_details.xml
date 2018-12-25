@@ -89,13 +89,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/header">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/book_details_rv"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:layout_marginStart="@dimen/text_margin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-            />
+                android:layout_marginStart="@dimen/text_margin"
+                android:layout_marginEnd="@dimen/text_margin"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_playable_media" />
         </FrameLayout>
     </RelativeLayout>
 </layout>

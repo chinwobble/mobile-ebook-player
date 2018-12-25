@@ -11,54 +11,77 @@
             />
         <variable
             name="item"
-            type="android.support.v4.media.MediaBrowserCompat.MediaItem" />
+            type="com.example.benne.daisyapp2.ui.bookDetails.BookSection" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:focusable="true"
-        android:clickable="true"
-        android:background="?android:attr/selectableItemBackground">
-
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{item.description.title}"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="?android:attr/textColorPrimary"
-            tools:text="Chapter 1" />
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{item.section.description.title}"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="?android:attr/textColorPrimary"
+                    tools:text="Chapter 1" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{item.section.description.subtitle}"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="?android:attr/textColorSecondary"
+                    tools:text="John Doe, his brothers, his sisters, his pets and his more than amazing band" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/bt_play_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view) -> listener.onPlaySection(item.section)}"
+                android:text="Play" />
+
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/book_page_number_gv"
+            android:columnWidth="30dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="2dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            tools:listitem="@layout/list_item_page_number"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{item.description.subtitle}"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:attr/textColorSecondary"
-            tools:text="John Doe, his brothers, his sisters, his pets and his more than amazing band" />
-    </LinearLayout>
-
-        <Button
-            android:id="@+id/bt_play_pause"
-            android:text="Play"
-            android:onClick="@{(view) -> listener.onPlaySection(item)}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-             />
-
+            android:layout_width="match_parent" />
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/book_details_rv"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--app:layoutManager="android.support.v7.widget.LinearLayoutManager"-->
+            <!--tools:listitem="@layout/list_item_page_number" />-->
     </LinearLayout>
 </layout>

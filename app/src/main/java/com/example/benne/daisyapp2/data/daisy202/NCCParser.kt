@@ -17,59 +17,73 @@ object NCCParser {
                 parseDaisyMetadata(document.head().children())
             else // hack since there's a bug in JSoup
                 parseDaisyMetadata(document.body().children())
-        val navElements = parseNavElements(document.body())
+        val navElements = ParseSections(document.body())
         return DaisyBook(navElements, metadata, file.parent)
     }
 
     private fun parseDaisyMetadata(headChildren: Iterable<Element>) : DaisyBookMetadata {
         fun Iterable<Element>.getAttr(key: String) =
             this
-                .first { it.attr("name") == key }
-                .attr("content")
-        val title: String = headChildren.getAttr("dc:title")
-        val date: String = headChildren.getAttr("dc:date")
-        val publisher: String = headChildren.getAttr("dc:publisher")
-        val creator: String = headChildren.getAttr("dc:creator")
-        val isbn: String = headChildren.getAttr("dc:source")
+                .firstOrNull() { it.attr("name") == key }
+                ?.attr("content")
+        val title = headChildren.getAttr("dc:title")!!
+        val date = headChildren.getAttr("dc:date")!!
+        val publisher = headChildren.getAttr("dc:publisher")!!
+        val creator = headChildren.getAttr("dc:creator")!!
+        val isbn = headChildren.getAttr("dc:source")
         return DaisyBookMetadata(title, date, publisher, creator, isbn)
     }
 
-    private fun parseNavElements(body: Element): List<NavElement> {
-        return body.children()
-            .map {
-                when (it.tagName()) {
-                    in arrayOf("h1", "h2", "h3", "h4", "h5", "h6") ->
-                        NavElement.HeadingReference(
-                            it.id(),
-                            it.selectFirst("a")
-                                .text(),
-                            it.selectFirst("a")
-                                .attr("href")
-                                .split("#")
-                                .first(),
-                            it.selectFirst("a")
-                                .attr("href")
-                                .split("#")
-                                .last(),
-                            it.tagName().replace("h", "").toByte()
-                        )
-                    "span" ->
-                        NavElement.PageReference(
-                            it.id(),
-                            it.selectFirst("a")
-                                .text(),
-                            it.selectFirst("a")
-                                .attr("href")
-                                .split("#")
-                                .first(),
-                            it.selectFirst("a")
-                                .attr("href")
-                                .split("#")
-                                .last(),
-                            it.className()
-                        )
-                    else -> null
+    private fun ParseSections(body: Element): List<NavElement> {
+        val results = mutableListOf<NavElement>()
+        for (i in 0..(body.children().count() - 1)) {
+            val current = body.children()[i]
+            val itemToAdd = when (current.tagName().toLowerCase()) {
+                in arrayOf("h1", "h2", "h3", "h4", "h5", "h6") -> toHeading(current)
+                "span" -> {
+                    val parentElement = results.findLast { it is NavElement.HeadingReference }
+                    toPageReference(current, parentElement!!.groupId)
                 }
-            }.filter { it != null }.requireNoNulls()
+                else -> null
+            }
+            itemToAdd?.also { results.add(it) }
+        }
+
+        return results;
+    }
+
+    private fun toPageReference(it: Element, parentId: String): NavElement.PageReference {
+        return NavElement.PageReference(
+                it.id(),
+                it.selectFirst("a")
+                        .text(),
+                it.selectFirst("a")
+                        .attr("href")
+                        .split("#")
+                        .first(),
+                it.selectFirst("a")
+                        .attr("href")
+                        .split("#")
+                        .last(),
+                it.className(),
+                parentId
+        )
+    }
+
+    private fun toHeading(it: Element): NavElement.HeadingReference {
+        return NavElement.HeadingReference(
+                it.id(),
+                it.selectFirst("a")
+                        .text(),
+                it.selectFirst("a")
+                        .attr("href")
+                        .split("#")
+                        .first(),
+                it.selectFirst("a")
+                        .attr("href")
+                        .split("#")
+                        .last(),
+                it.tagName().replace("h", "").toByte()
+        )
     }
 }

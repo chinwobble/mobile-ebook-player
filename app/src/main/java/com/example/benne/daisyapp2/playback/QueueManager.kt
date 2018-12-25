@@ -87,12 +87,12 @@ class QueueManager @Inject constructor(
         return null
     }
 
-    fun updateMetadata() {
-        if (currentBook != null) {
-            val metadata = toMediaMetadata(currentBook!!, currentNavElement!!)
-            metadataUpdateListener.onMetadataChanged(metadata)
-        }
-    }
+//    fun updateMetadata() {
+//        if (currentBook != null) {
+//            val metadata = toMediaMetadata(currentBook!!, currentNavElement!!)
+//            metadataUpdateListener.onMetadataChanged(metadata)
+//        }
+//    }
 
     interface MetadataUpdateListener {
         fun onMetadataChanged(metadata: MediaMetadataCompat?)

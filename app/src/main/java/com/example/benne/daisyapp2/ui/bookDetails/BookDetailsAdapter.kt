@@ -13,45 +13,50 @@ import com.example.benne.daisyapp2.ui.*
 /**
  * Created by benne on 11/01/2018.
  */
-class BookDetailsAdapter(
-    items: List<MediaBrowserCompat.MediaItem>,
-    private val vm: BookDetailsViewModel)
-    : RecyclerView.Adapter<DataBoundViewHolder>() {
+class BookDetailsAdapter(private val vm: BookDetailsViewModel)
+    : RecyclerView.Adapter<BookDetailsAdapter.ViewHolder>() {
 
-    private var _items: List<MediaBrowserCompat.MediaItem>
-    init {
-        val heading = NavElement.HeadingReference::class.java.canonicalName
-        _items = items
-            .filter { it
-                .description
-                .extras!!
-                .getString(ELEMENT_TYPE_KEY) == heading }
-    }
-
-    fun setItems(items: List<MediaBrowserCompat.MediaItem>) {
-        _items = items
-        notifyDataSetChanged()
-    }
+    var items: List<BookSection> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun getItemCount(): Int {
-        return _items.count()
+        return items.count()
     }
 
-    override fun onBindViewHolder(holder: DataBoundViewHolder, position: Int) {
-        val item = _items[position]
+    override fun onBindViewHolder(holder: BookDetailsAdapter.ViewHolder, position: Int) {
+        val item = items[position].section
         val listener = object : BookDetailsUserActionListener {
             override fun onPlaySection(item: MediaBrowserCompat.MediaItem) {
                 vm.playSection(item)
             }
         }
 
-        holder.bind(item as Any, listener)
+        holder.bind(items[position], listener)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBoundViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookDetailsAdapter.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemBinding = ListItemPlayableMediaBinding
-            .inflate(layoutInflater, parent, false)
-        return DataBoundViewHolder(itemBinding)
+                .inflate(layoutInflater, parent, false)
+        return BookDetailsAdapter.ViewHolder(itemBinding)
+    }
+
+    class ViewHolder(private val binding: ListItemPlayableMediaBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: BookSection, listener: BookDetailsUserActionListener) {
+            binding.item = item
+            binding.listener = listener
+            val adapter = binding.bookPageNumberGv.adapter
+            if (adapter !is PageNumbersGridAdapter) {
+                binding.bookPageNumberGv.adapter = PageNumbersGridAdapter()
+            }
+            (binding.bookPageNumberGv.adapter as PageNumbersGridAdapter).items = item.pages
+
+            binding.bookPageNumberGv.invalidateViews()
+            //binding.bookPageNumberGv.adapter = adapter
+            binding.executePendingBindings()
+        }
     }
 }

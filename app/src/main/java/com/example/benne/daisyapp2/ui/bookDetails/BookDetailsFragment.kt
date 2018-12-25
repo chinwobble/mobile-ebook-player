@@ -18,7 +18,7 @@ import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
 /**
  * Created by benne on 10/01/2018.
  */
-class BookDetailsFragment() : Fragment() {
+class BookDetailsFragment : Fragment() {
     private lateinit var _viewModel: BookDetailsViewModel
     private lateinit var _bookDetailsAdapter: BookDetailsAdapter
 
@@ -36,16 +36,20 @@ class BookDetailsFragment() : Fragment() {
 
         val recyclerView = binding.root.findViewById(R.id.book_details_rv) as RecyclerView
 
-        _bookDetailsAdapter = BookDetailsAdapter(emptyList(), _viewModel)
+        _bookDetailsAdapter = BookDetailsAdapter(_viewModel)
         recyclerView.adapter = _bookDetailsAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
 
         recyclerView.addItemDecoration(
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
 
-        _viewModel.bookSections.observe(this, Observer { items ->
-            _bookDetailsAdapter.setItems(items!!)
+        _viewModel.sections.observe(this, Observer { items ->
+            _bookDetailsAdapter.items = items!!
+        })
+
+        _viewModel.sections.observe(this, Observer { items ->
+
+            print(items)
         })
 
         binding.setLifecycleOwner(this)

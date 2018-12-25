@@ -17,7 +17,6 @@ class DataBoundViewHolder(
         if (listener != null) {
             bindings.setVariable(BR.listener, listener)
         }
-
         bindings.setVariable(BR.item, item)
         bindings.executePendingBindings()
     }

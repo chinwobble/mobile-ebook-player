@@ -13,18 +13,16 @@ import com.example.benne.daisyapp2.ui.*
 /**
  * Created by benne on 6/01/2018.
  */
-class BookListAdapter(
-    private val context: Context,
-    var mediaItems: List<MediaBrowserCompat.MediaItem>
-    ) : RecyclerView.Adapter<DataBoundViewHolder>() {
+class BookListAdapter : RecyclerView.Adapter<DataBoundViewHolder>() {
 
-    fun setItems(items: List<MediaBrowserCompat.MediaItem>) {
-        mediaItems = items
-        this.notifyDataSetChanged()
-    }
+    var items: List<MediaBrowserCompat.MediaItem> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onBindViewHolder(holder: DataBoundViewHolder, position: Int) {
-        val item = mediaItems[position]
+        val item = items[position]
         holder.bind(item as Any)
     }
 
@@ -35,6 +33,6 @@ class BookListAdapter(
         return DataBoundViewHolder(itemBinding)
     }
 
-    override fun getItemCount() = this.mediaItems.count()
+    override fun getItemCount() = items.count()
 
 }
