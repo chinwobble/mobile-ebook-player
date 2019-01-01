@@ -1,13 +1,13 @@
 package com.example.benne.daisyapp2.ui.bookList
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.support.v4.media.MediaBrowserCompat
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +22,7 @@ import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
  * Created by benne on 6/01/2018.
  */
 class BookListFragment()
-    : Fragment() {
+    : androidx.fragment.app.Fragment() {
     private lateinit var _viewModel: BookListViewModel
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private lateinit var _bookListAdapter: BookListAdapter
@@ -48,10 +48,10 @@ class BookListFragment()
         _bookListAdapter = BookListAdapter()
 
         recyclerView.adapter = _bookListAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
 
         recyclerView.addItemDecoration(
-            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+                androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
         )
 
         _viewModel.children.observe(this, Observer<List<MediaBrowserCompat.MediaItem>> { items ->
@@ -61,7 +61,7 @@ class BookListFragment()
 
         ItemClickSupport.addTo(recyclerView)
             .setOnItemClickListener(object : ItemClickSupport.OnItemClickListener {
-                override fun onItemClicked(recyclerView: RecyclerView, position: Int, v: View) {
+                override fun onItemClicked(recyclerView: androidx.recyclerview.widget.RecyclerView, position: Int, v: View) {
                     val selectedMediaId =
                         _bookListAdapter.items[position].mediaId!!
                     _viewModel.setSelectedItem(selectedMediaId)

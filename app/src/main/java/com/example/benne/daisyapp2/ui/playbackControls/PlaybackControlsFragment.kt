@@ -1,8 +1,8 @@
 package com.example.benne.daisyapp2.ui.playbackControls
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import android.os.*
-import android.support.v4.app.*
+import androidx.core.app.*
 import android.view.*
 import com.example.benne.daisyapp2.databinding.*
 
@@ -10,7 +10,7 @@ import com.example.benne.daisyapp2.databinding.*
  * Created by benne on 17/01/2018.
  */
 class PlaybackControlsFragment
-    : Fragment() {
+    : androidx.fragment.app.Fragment() {
 
     private lateinit var viewModel: PlaybackControlsViewModel
 

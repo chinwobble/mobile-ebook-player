@@ -1,7 +1,7 @@
 package com.example.benne.daisyapp2.ui
 
-import android.databinding.*
-import android.support.v7.widget.*
+import androidx.databinding.*
+import androidx.appcompat.widget.*
 import com.example.benne.daisyapp2.*
 import com.example.benne.daisyapp2.dataBindings.*
 
@@ -11,7 +11,7 @@ import com.example.benne.daisyapp2.dataBindings.*
  */
 class DataBoundViewHolder(
     private val bindings: ViewDataBinding)
-    : RecyclerView.ViewHolder(bindings.root) {
+    : androidx.recyclerview.widget.RecyclerView.ViewHolder(bindings.root) {
 
     fun bind(item : Any, listener: UserActionListener? = null) {
         if (listener != null) {

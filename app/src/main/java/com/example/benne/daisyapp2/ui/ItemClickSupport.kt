@@ -1,6 +1,6 @@
 package com.example.benne.daisyapp2.ui
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.view.View.OnLongClickListener
 import com.example.benne.daisyapp2.*
@@ -9,7 +9,7 @@ import com.example.benne.daisyapp2.*
 /**
  * Created by benne on 7/01/2018.
  */
-class ItemClickSupport private constructor(private val mRecyclerView: RecyclerView) {
+class ItemClickSupport private constructor(private val mRecyclerView: androidx.recyclerview.widget.RecyclerView) {
     private var mOnItemClickListener: OnItemClickListener? = null
     private var mOnItemLongClickListener: OnItemLongClickListener? = null
     private val mOnClickListener = View.OnClickListener { v ->
@@ -27,7 +27,7 @@ class ItemClickSupport private constructor(private val mRecyclerView: RecyclerVi
         false
     }
 
-    private val mAttachListener = object : RecyclerView.OnChildAttachStateChangeListener {
+    private val mAttachListener = object : androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener {
         override fun onChildViewAttachedToWindow(view: View) {
             if (mOnItemClickListener != null) {
                 view.setOnClickListener(mOnClickListener)
@@ -57,30 +57,30 @@ class ItemClickSupport private constructor(private val mRecyclerView: RecyclerVi
         return this
     }
 
-    private fun detach(view: RecyclerView) {
+    private fun detach(view: androidx.recyclerview.widget.RecyclerView) {
         view.removeOnChildAttachStateChangeListener(mAttachListener)
         view.setTag(R.id.item_click_support, null)
     }
 
     interface OnItemClickListener {
 
-        fun onItemClicked(recyclerView: RecyclerView, position: Int, v: View)
+        fun onItemClicked(recyclerView: androidx.recyclerview.widget.RecyclerView, position: Int, v: View)
     }
 
     interface OnItemLongClickListener {
 
-        fun onItemLongClicked(recyclerView: RecyclerView, position: Int, v: View): Boolean
+        fun onItemLongClicked(recyclerView: androidx.recyclerview.widget.RecyclerView, position: Int, v: View): Boolean
     }
 
     companion object {
 
-        fun addTo(view: RecyclerView): ItemClickSupport {
+        fun addTo(view: androidx.recyclerview.widget.RecyclerView): ItemClickSupport {
             return view.getTag(R.id.item_click_support)
                 as? ItemClickSupport
                 ?: ItemClickSupport(view)
         }
 
-        fun removeFrom(view: RecyclerView): ItemClickSupport? {
+        fun removeFrom(view: androidx.recyclerview.widget.RecyclerView): ItemClickSupport? {
             val support = view.getTag(R.id.item_click_support) as ItemClickSupport
             support.detach(view)
             return support

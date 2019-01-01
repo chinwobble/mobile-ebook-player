@@ -1,12 +1,12 @@
 package com.example.benne.daisyapp2.ui.bookDetails
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.di.InjectorUtils
@@ -18,7 +18,7 @@ import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
 /**
  * Created by benne on 10/01/2018.
  */
-class BookDetailsFragment : Fragment() {
+class BookDetailsFragment : androidx.fragment.app.Fragment() {
     private lateinit var _viewModel: BookDetailsViewModel
     private lateinit var _bookDetailsAdapter: BookDetailsAdapter
 
@@ -34,13 +34,13 @@ class BookDetailsFragment : Fragment() {
         _viewModel.bookMediaId = bookMediaId
         val binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
 
-        val recyclerView = binding.root.findViewById(R.id.book_details_rv) as RecyclerView
+        val recyclerView = binding.root.findViewById(R.id.book_details_rv) as androidx.recyclerview.widget.RecyclerView
 
         _bookDetailsAdapter = BookDetailsAdapter(_viewModel)
         recyclerView.adapter = _bookDetailsAdapter
 
         recyclerView.addItemDecoration(
-            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+                androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
         )
 
         _viewModel.sections.observe(this, Observer { items ->

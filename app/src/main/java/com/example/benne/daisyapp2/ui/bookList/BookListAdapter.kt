@@ -2,7 +2,7 @@ package com.example.benne.daisyapp2.ui.bookList
 
 import android.content.*
 import android.support.v4.media.*
-import android.support.v7.widget.*
+import androidx.appcompat.widget.*
 import android.view.*
 import android.view.LayoutInflater
 import android.widget.*
@@ -13,7 +13,7 @@ import com.example.benne.daisyapp2.ui.*
 /**
  * Created by benne on 6/01/2018.
  */
-class BookListAdapter : RecyclerView.Adapter<DataBoundViewHolder>() {
+class BookListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<DataBoundViewHolder>() {
 
     var items: List<MediaBrowserCompat.MediaItem> = emptyList()
         set(value) {

@@ -1,6 +1,6 @@
 package com.example.benne.daisyapp2.data
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 @Entity
 data class Book(

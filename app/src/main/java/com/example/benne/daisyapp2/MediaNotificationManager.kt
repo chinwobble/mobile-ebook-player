@@ -4,10 +4,10 @@ import android.app.*
 import android.content.*
 import android.graphics.*
 import android.os.*
-import android.support.annotation.*
-import android.support.v4.app.NotificationCompat
+import androidx.annotation.*
+import androidx.core.app.NotificationCompat
 import android.support.v4.media.*
-import android.support.v4.media.app.NotificationCompat.MediaStyle
+import androidx.media.app.NotificationCompat.MediaStyle
 import android.support.v4.media.session.*
 import android.util.*
 import com.example.benne.daisyapp2.playback.MediaService

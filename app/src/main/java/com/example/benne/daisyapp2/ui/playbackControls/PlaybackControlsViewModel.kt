@@ -1,7 +1,7 @@
 package com.example.benne.daisyapp2.ui.playbackControls
 
-import android.arch.lifecycle.*
-import android.databinding.*
+import androidx.lifecycle.*
+import androidx.databinding.*
 
 /**
  * Created by benne on 19/02/2018.

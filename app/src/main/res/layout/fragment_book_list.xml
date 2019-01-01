@@ -14,20 +14,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             app:refreshing="@{viewModel.listRefreshing}"
             app:onRefreshListener="@{() -> viewModel.onBookListRefresh()}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
             
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/media_items_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             tools:listitem="@layout/list_item_book"
             />
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 </layout>

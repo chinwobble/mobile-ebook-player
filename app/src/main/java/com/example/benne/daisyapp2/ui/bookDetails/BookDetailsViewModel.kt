@@ -1,6 +1,6 @@
 package com.example.benne.daisyapp2.ui.bookDetails
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import android.os.Bundle
 import android.support.v4.media.*
 import android.util.Log

@@ -1,10 +1,11 @@
 package com.example.benne.daisyapp2.ui.bookDetails
 
 import android.support.v4.media.*
-import android.support.v7.widget.*
+import androidx.appcompat.widget.*
 import android.view.*
 import com.example.benne.daisyapp2.data.daisy202.*
 import android.view.LayoutInflater
+import androidx.recyclerview.selection.SelectionTracker
 import com.example.benne.daisyapp2.databinding.*
 import com.example.benne.daisyapp2.playback.MediaService.Companion.ELEMENT_TYPE_KEY
 import com.example.benne.daisyapp2.ui.*
@@ -14,7 +15,7 @@ import com.example.benne.daisyapp2.ui.*
  * Created by benne on 11/01/2018.
  */
 class BookDetailsAdapter(private val vm: BookDetailsViewModel)
-    : RecyclerView.Adapter<BookDetailsAdapter.ViewHolder>() {
+    : androidx.recyclerview.widget.RecyclerView.Adapter<BookDetailsAdapter.ViewHolder>() {
 
     var items: List<BookSection> = emptyList()
         set(value) {
@@ -44,7 +45,7 @@ class BookDetailsAdapter(private val vm: BookDetailsViewModel)
         return BookDetailsAdapter.ViewHolder(itemBinding)
     }
 
-    class ViewHolder(private val binding: ListItemPlayableMediaBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ListItemPlayableMediaBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
         fun bind(item: BookSection, listener: BookDetailsUserActionListener) {
             binding.item = item
             binding.listener = listener

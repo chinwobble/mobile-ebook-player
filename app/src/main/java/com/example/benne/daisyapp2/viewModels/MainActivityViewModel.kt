@@ -1,6 +1,6 @@
 package com.example.benne.daisyapp2.viewModels
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log

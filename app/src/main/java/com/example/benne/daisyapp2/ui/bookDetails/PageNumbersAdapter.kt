@@ -1,7 +1,7 @@
 package com.example.benne.daisyapp2.ui.bookDetails
 
 import android.support.v4.media.MediaBrowserCompat
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +48,7 @@ class PageNumbersGridAdapter() : BaseAdapter() {
 }
 
 class PageNumbersAdapter()
-    : RecyclerView.Adapter<PageNumbersAdapter.ViewHolder>() {
+    : androidx.recyclerview.widget.RecyclerView.Adapter<PageNumbersAdapter.ViewHolder>() {
 
     override fun getItemCount() = items.count()
 
@@ -69,7 +69,7 @@ class PageNumbersAdapter()
     }
 
     class ViewHolder(binding: ListItemPageNumberBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+        : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MediaBrowserCompat.MediaItem) {
 
             //binding.item = item
