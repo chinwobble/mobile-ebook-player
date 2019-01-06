@@ -12,8 +12,12 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.ActivityMainBinding
@@ -25,7 +29,8 @@ import com.google.android.material.R as AR
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainActivityViewModel
-
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +41,10 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this, R.id.navigation_fragment)
         //navController.navigate(R.id.fragment_book)
         setSupportActionBar(findViewById(R.id.toolbar))
+        drawerLayout = binding.drawerLayout
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
         viewModel = ViewModelProviders
                 .of(this, InjectorUtils.provideMainActivityViewModel(this))
@@ -83,6 +92,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
     override fun onNewIntent(intent: Intent?) {
         if (Intent.ACTION_SEARCH == intent?.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
@@ -97,6 +110,10 @@ class MainActivity : AppCompatActivity() {
 
         when (requestCode) {
             0 -> {
+                if (!grantResults.any()) {
+                    return;
+                }
+
                 val readStorageResult = grantResults.first()
                 if (readStorageResult == PackageManager.PERMISSION_GRANTED) {
                     // todo handle

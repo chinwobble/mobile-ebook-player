@@ -1,24 +1,21 @@
 package com.example.benne.daisyapp2.ui.bookDetails
 
+import android.app.SearchManager
+import android.os.Bundle
+import android.view.*
+import android.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.view.*
 import com.example.benne.daisyapp2.R
-import com.example.benne.daisyapp2.di.InjectorUtils
-import android.app.SearchManager
-import android.widget.SearchView
 import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
+import com.example.benne.daisyapp2.di.InjectorUtils
 
 
 /**
  * Created by benne on 10/01/2018.
  */
-class BookDetailsFragment : androidx.fragment.app.Fragment() {
+class BookDetailsFragment : Fragment() {
     private lateinit var _viewModel: BookDetailsViewModel
     private lateinit var _bookDetailsAdapter: BookDetailsAdapter
 
@@ -56,17 +53,23 @@ class BookDetailsFragment : androidx.fragment.app.Fragment() {
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-
-        inflater!!.inflate(R.menu.main, menu)
-        val searchManager = activity!!.getSystemService(SearchManager::class.java)
-        val searchView = menu!!.findItem(R.id.search).actionView as SearchView
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(activity!!.componentName))
-        // searchView.setOnQueryTextListener()
-        // https://stackoverflow.com/questions/30398247/how-to-filter-a-recyclerview-with-a-searchview
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
     }
+//    override fun performCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Boolean {
+//        return super.performCreateOptionsMenu(menu, inflater)
+//    }
+//    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+//        androidx.appcompat.widget.
+//        layoutInflater.inflate(R.menu.main, menu)
+//        val searchManager = activity!!.getSystemService(SearchManager::class.java)
+//        val searchView = menu!!.findItem(R.id.search).actionView as SearchView
+//        searchView.setSearchableInfo(
+//                searchManager.getSearchableInfo(activity!!.componentName))
+//        // searchView.setOnQueryTextListener()
+//        // https://stackoverflow.com/questions/30398247/how-to-filter-a-recyclerview-with-a-searchview
+//        super.onCreateOptionsMenu(menu, v, menuInfo)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         this.setHasOptionsMenu(true)
