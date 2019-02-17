@@ -28,28 +28,19 @@
                 android:layout_width="match_parent"
                 android:layout_below="@id/app_bar_container"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/controls_container"
+                android:layout_above="@+id/fragment_playback_controls"
                 app:navGraph="@navigation/nav_graph" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/controls_container"
+            <fragment
+                android:name="com.example.benne.daisyapp2.ui.playbackControls.PlaybackControlsFragment"
+                android:id="@+id/fragment_playback_controls"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                app:cardElevation="8dp">
-
-                <fragment android:name="com.example.benne.daisyapp2.ui.playbackControls.PlaybackControlsFragment"
-                    android:id="@+id/fragment_playback_controls"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    tools:layout="@layout/fragment_playback_controls" />
-
-            </androidx.cardview.widget.CardView>
+                tools:layout="@layout/fragment_playback_controls" />
         </RelativeLayout>
 
         <com.google.android.material.navigation.NavigationView
-
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

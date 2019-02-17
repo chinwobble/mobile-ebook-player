@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <variable
@@ -16,51 +18,44 @@
             name="item"
             type="android.support.v4.media.MediaBrowserCompat.MediaItem" />
     </data>
-
-    <RelativeLayout
-
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
         android:layout_height="wrap_content"
-        android:padding="@dimen/playback_controls_padding">
-
-
-        <ImageView
-            android:id="@+id/album_art"
-            tools:src="@drawable/ic_launcher_foreground"
-            android:layout_width="@dimen/playback_controls_albumart_size"
-            android:layout_height="@dimen/playback_controls_albumart_size"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/currently_playing_song"
-            android:layout_alignParentStart="true"/>
-        <LinearLayout
-            android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:elevation="24dp">
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/playback_controls_albumart_horizontal_margin"
-            android:orientation="vertical"
-            android:layout_toEndOf="@id/album_art"
-            android:layout_toStartOf="@+id/play_pause"
-            android:layout_centerVertical="true">
-            <TextView
-                android:id="@+id/title"
-                tools:text="The Best Music EVAH1111 THE BEST"
-                android:ellipsize="end"
-                android:maxLines="1"
+            android:padding="@dimen/playback_controls_padding">
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/currently_playing_song"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="?android:attr/textColorPrimary"/>
-            <TextView
-                android:id="@+id/artist"
-                tools:text="@{viewModel.PlayingBookText}"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/currently_playing_artist"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-            <!--<TextView-->
+                android:layout_toStartOf="@id/controls_container"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/currently_playing_song"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="?android:attr/textColorPrimary"
+                    tools:text="The Best Music EVAH1111 THE BEST" />
+
+                <TextView
+                    android:id="@+id/artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/currently_playing_artist"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    tools:text="@{viewModel.PlayingBookText}" />
+                <!--<TextView-->
                 <!--android:id="@+id/extra_info"-->
                 <!--tools:text="@{viewModel.PlayingBookText}"-->
                 <!--android:ellipsize="end"-->
@@ -70,18 +65,56 @@
                 <!--android:visibility="gone"-->
                 <!--android:contentDescription="@string/currently_playing_extra_info"-->
                 <!--android:textAppearance="?android:attr/textAppearanceSmall"/>-->
-        </LinearLayout>
-        <ImageButton
-            android:id="@+id/play_pause"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_play_arrow_black_24dp"
-            android:contentDescription="Play"
-            android:tintMode="src_in"
-            android:onClick="@{(view) -> listener.onPlayPressed()}"
-            android:tint="@color/colorPrimaryDark"/>
-    </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/controls_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/prev_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="Previous"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_skip_previous_black_24dp"
+                    android:tint="@color/colorPrimaryDark"
+                    android:tintMode="src_in" />
+
+                <ImageButton
+                    android:id="@+id/play_pause_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="Play"
+                    android:onClick="@{(view) -> listener.onPlayPressed()}"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_play_arrow_black_24dp"
+                    android:tint="@color/colorPrimaryDark"
+                    android:tintMode="src_in" />
+
+                <ImageButton
+                    android:id="@+id/next_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:contentDescription="Next"
+                    android:onClick="@{(view) -> listener.onPlayPressed()}"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_skip_next_black_24dp"
+                    android:tint="@color/colorPrimaryDark"
+                    android:tintMode="src_in" />
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

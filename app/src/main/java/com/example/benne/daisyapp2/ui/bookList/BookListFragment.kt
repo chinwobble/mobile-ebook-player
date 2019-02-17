@@ -21,8 +21,7 @@ import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 /**
  * Created by benne on 6/01/2018.
  */
-class BookListFragment()
-    : androidx.fragment.app.Fragment() {
+class BookListFragment() : Fragment() {
     private lateinit var _viewModel: BookListViewModel
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private lateinit var _bookListAdapter: BookListAdapter
@@ -56,16 +55,17 @@ class BookListFragment()
 
         _viewModel.children.observe(this, Observer<List<MediaBrowserCompat.MediaItem>> { items ->
             Log.d(TAG, "observed changes to children items: ${items!!.count()}")
-            _bookListAdapter.items = items
+            _bookListAdapter.submitList(items)
         })
 
         ItemClickSupport.addTo(recyclerView)
             .setOnItemClickListener(object : ItemClickSupport.OnItemClickListener {
-                override fun onItemClicked(recyclerView: androidx.recyclerview.widget.RecyclerView, position: Int, v: View) {
+                override fun onItemClicked(recyclerView: RecyclerView, position: Int, v: View) {
                     val selectedMediaId =
-                        _bookListAdapter.items[position].mediaId!!
+                        _bookListAdapter.currentList[position].mediaId!!
                     _viewModel.setSelectedItem(selectedMediaId)
-                    val direction = BookListFragmentDirections.actionBookListFragmentToBookDetailsFragment(selectedMediaId)
+                    val direction = BookListFragmentDirections
+                            .actionBookListFragmentToBookDetailsFragment(selectedMediaId)
                     findNavController().navigate(direction)
                     //mainActivityViewModel.mediaItemClicked(_bookListAdapter.mediaItems[position])
                 }
