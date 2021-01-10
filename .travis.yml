@@ -26,7 +26,9 @@ before_install:
   - yes | sdkmanager "platforms;android-28"
 
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - echo "y" | android update sdk -a --no-ui --filter sys-img-x86-android-26
+  - android list targets
+  - echo no | android create avd --force -n test -t android-26 --abi sys-img-x86
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
 script:
