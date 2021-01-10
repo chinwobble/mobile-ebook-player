@@ -4,12 +4,12 @@ android:
     - tools # to get the new `repository-11.xml`
     - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
     - platform-tools
-    - build-tools-28.0.3
-    - android-28
+    - build-tools-30.0.3
+    - android-30
     - extra-android-m2repository
     - extra
     - add-on
-    - sys-img-x86-android-26
+    - sys-img-x86-android-30
   licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
@@ -23,12 +23,12 @@ env:
 jdk:
   - oraclejdk8
 before_install:
-  - yes | sdkmanager "platforms;android-28"
+  - yes | sdkmanager "platforms;android-30"
 
 before_script:
   - echo "y" | android update sdk -a --no-ui --filter sys-img-x86-android-26
   - android list targets
-  - echo no | android create avd --force -n test -t android-26 --abi sys-img-x86
+  - echo no | android create avd --force -n test -t android-30 --abi sys-img-x86
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
 script:
