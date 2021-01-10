@@ -3,7 +3,6 @@ package com.example.benne.daisyapp2
 import android.Manifest
 import android.app.SearchManager
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.databinding.DataBindingUtil
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
@@ -47,8 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
-        viewModel = ViewModelProviders
-                .of(this, InjectorUtils.provideMainActivityViewModel(this))
+        viewModel = ViewModelProvider(this, InjectorUtils.provideMainActivityViewModel(this))
                 .get(MainActivityViewModel::class.java)
 
         /**
@@ -72,7 +71,7 @@ class MainActivity : AppCompatActivity() {
          */
         viewModel.navigateToMediaItem.observe(this, Observer {
             it?.getContentIfNotHandled()?.let { mediaId ->
-                Log.d(TAG, "unhandled get content")
+                Log.d(TAG, "unhandled get content $mediaId")
                 //navigateToMediaItem(mediaId)
             }
         })

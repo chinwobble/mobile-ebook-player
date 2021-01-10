@@ -1,7 +1,6 @@
 package com.example.benne.daisyapp2.ui.bookList
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.support.v4.media.MediaBrowserCompat
@@ -12,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.benne.daisyapp2.databinding.FragmentBookListBinding
 import com.example.benne.daisyapp2.di.InjectorUtils
@@ -29,12 +29,10 @@ class BookListFragment() : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val context = activity ?: return null
 
-        _viewModel = ViewModelProviders
-            .of(this, InjectorUtils.provideBookListViewFragmentViewModel(context))
+        _viewModel = ViewModelProvider(this, InjectorUtils.provideBookListViewFragmentViewModel(context))
             .get(BookListViewModel::class.java)
 
-        mainActivityViewModel = ViewModelProviders
-            .of(activity!!, InjectorUtils.provideMainActivityViewModel(context))
+        mainActivityViewModel = ViewModelProvider(requireActivity(), InjectorUtils.provideMainActivityViewModel(context))
             .get(MainActivityViewModel::class.java)
 
         //set the media item
@@ -53,7 +51,7 @@ class BookListFragment() : Fragment() {
                 androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
         )
 
-        _viewModel.children.observe(this, Observer<List<MediaBrowserCompat.MediaItem>> { items ->
+        _viewModel.children.observe(viewLifecycleOwner, Observer<List<MediaBrowserCompat.MediaItem>> { items ->
             Log.d(TAG, "observed changes to children items: ${items!!.count()}")
             _bookListAdapter.submitList(items)
         })

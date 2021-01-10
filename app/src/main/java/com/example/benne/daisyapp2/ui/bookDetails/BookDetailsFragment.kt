@@ -6,7 +6,7 @@ import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
 import com.example.benne.daisyapp2.di.InjectorUtils
@@ -23,9 +23,7 @@ class BookDetailsFragment : Fragment() {
         val context = activity ?: return null
         val bookMediaId = BookDetailsFragmentArgs.fromBundle(arguments!!).mediaId
 
-
-        _viewModel = ViewModelProviders
-            .of(this, InjectorUtils.provideBookDetailsFragmentViewModel(context, bookMediaId))
+        _viewModel = ViewModelProvider(this, InjectorUtils.provideBookDetailsFragmentViewModel(context, bookMediaId))
             .get(BookDetailsViewModel::class.java)
 
         _viewModel.bookMediaId = bookMediaId

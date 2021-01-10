@@ -16,8 +16,7 @@ data class ParallelElement(
 
     override val allAudioElementDepthFirst: List<AudioElement>
         get() =
-            audioSequence
-                    ?.let { it!!.allAudioElementDepthFirst }
+            audioSequence?.allAudioElementDepthFirst
                     .orEmpty()
 
 

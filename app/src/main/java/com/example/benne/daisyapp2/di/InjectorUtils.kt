@@ -7,6 +7,7 @@ import com.example.benne.daisyapp2.playback.MediaService
 import com.example.benne.daisyapp2.ui.bookDetails.BookDetailsViewModel
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 import com.example.benne.daisyapp2.ui.bookList.BookListViewModel
+import com.example.benne.daisyapp2.ui.playbackControls.PlaybackControlsViewModel
 
 
 /**
@@ -30,6 +31,14 @@ object InjectorUtils {
 
         val mediaSessionConnection = provideMediaSessionConnection(applicationContext)
         return BookListViewModel.Factory(mediaSessionConnection)
+    }
+
+    fun providePlaybackControlsFragmentViewModel(context: Context)
+            : PlaybackControlsViewModel.Factory {
+        val applicationContext = context.applicationContext
+
+        val mediaSessionConnection = provideMediaSessionConnection(applicationContext)
+        return PlaybackControlsViewModel.Factory(mediaSessionConnection)
     }
 
     fun provideBookDetailsFragmentViewModel(context: Context, mediaId: String)

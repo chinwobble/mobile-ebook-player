@@ -1,10 +1,11 @@
 package com.example.benne.daisyapp2.ui.playbackControls
 
+import android.content.Context
 import androidx.lifecycle.*
 import android.os.*
-import androidx.core.app.*
 import android.view.*
 import com.example.benne.daisyapp2.databinding.*
+import com.example.benne.daisyapp2.di.InjectorUtils
 
 /**
  * Created by benne on 17/01/2018.
@@ -15,9 +16,8 @@ class PlaybackControlsFragment
     private lateinit var viewModel: PlaybackControlsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders
-            .of(activity!!)
-            .get(PlaybackControlsViewModel::class.java)
+        viewModel = ViewModelProvider(this, InjectorUtils.providePlaybackControlsFragmentViewModel(requireActivity()))
+                .get(PlaybackControlsViewModel::class.java)
 
         val binding = FragmentPlaybackControlsBinding.inflate(inflater, container, false)
 
