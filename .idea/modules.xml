@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DaisyApp2.iml" filepath="$PROJECT_DIR$/DaisyApp2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobile-ebook-player.iml" filepath="$PROJECT_DIR$/.idea/modules/mobile-ebook-player.iml" group="mobile-ebook-player" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/mobile-ebook-player-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/mobile-ebook-player-app.iml" group="mobile-ebook-player/app" />
     </modules>
   </component>
 </project>

@@ -12,6 +12,9 @@ data class Book(
 @Entity(
     foreignKeys = [
         ForeignKey(entity = Book::class, parentColumns = ["id"], childColumns = ["bookId"])
+    ],
+    indices = [
+       Index(value = ["bookId"], unique = false)
     ]
 )
 data class Bookmark(
