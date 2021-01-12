@@ -4,6 +4,7 @@ import org.jsoup.*
 import org.jsoup.nodes.*
 import java.io.*
 
+
 /**
  * Created by benne on 7/01/2018.
  */
@@ -36,7 +37,7 @@ object NCCParser {
 
     private fun ParseSections(body: Element): List<NavElement> {
         val results = mutableListOf<NavElement>()
-        for (i in 0..(body.children().count() - 1)) {
+        for (i in 0 until body.children().count()) {
             val current = body.children()[i]
             val itemToAdd = when (current.tagName().toLowerCase()) {
                 in arrayOf("h1", "h2", "h3", "h4", "h5", "h6") -> toHeading(current)
