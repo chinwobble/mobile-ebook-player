@@ -11,7 +11,7 @@ import java.io.*
 object NCCParser {
 
     /**
-     * Takes in an ncc.html file and parses it to create a DaisyBook
+     * Takes in an ncc.html (Navigation Control Centre) file and parses it to create a DaisyBook
      */
     fun parseNCC(file: File): DaisyBook {
         val document = Jsoup.parse(file.readText())

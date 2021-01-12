@@ -9,11 +9,11 @@ import org.junit.Test
 import java.io.File
 import java.io.FileNotFoundException
 
-class Daisy202UnitTests {
+class NCCParserUnitTests {
     companion object {
         private var book: DaisyBook? = null
         private val path = File("").absolutePath + "\\src\\test\\java\\com\\example\\benne\\daisyapp2"
-        @BeforeClass @JvmStatic fun simpleNCCSetup() {
+        @BeforeClass @JvmStatic fun nccTestSetup() {
             try {
                 val file = File(path + "\\nccTestFile.html")
                 book = parseNCC(file)
