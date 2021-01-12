@@ -1,18 +1,18 @@
 Android E-Book Reader
 ======================
-[![Build Status](https://travis-ci.org/chinwobble/mobile-ebook-player.svg?branch=master)](https://travis-ci.org/chinwobble/mobile-ebook-player)
+![Android CI Build Status](https://github.com/chinwobble/mobile-ebook-player/workflows/Android%20CI/badge.svg)
 
 E-book reader for android.
 
 Supported book formats:
 - [Daisy 2.02](http://www.daisy.org/z3986/specifications/daisy_202.html)
 
-Libraries used: 
+Libraries used:
 - Android Architecture components
-- Dagger 2 
+- Dagger 2
 - Google ExoPlayer
 
-- 
+-
 https://github.com/android/sunflower
 
 License
