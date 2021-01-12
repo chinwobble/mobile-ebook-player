@@ -33,15 +33,12 @@ import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
  *  [MediaBrowserConnectionCallback] and [MediaBrowserCompat] objects.
  */
 class MediaSessionConnection(context: Context, serviceComponent: ComponentName) {
-    val isConnected = MutableLiveData<Boolean>()
-            .apply { postValue(false) }
+    val isConnected = MutableLiveData<Boolean>(false)
 
     val rootMediaId: String get() = mediaBrowser.root
 
-    val playbackState = MutableLiveData<PlaybackStateCompat>()
-            .apply { postValue(EMPTY_PLAYBACK_STATE) }
-    val nowPlaying = MutableLiveData<MediaMetadataCompat>()
-            .apply { postValue(NOTHING_PLAYING) }
+    val playbackState = MutableLiveData<PlaybackStateCompat>(EMPTY_PLAYBACK_STATE)
+    val nowPlaying = MutableLiveData<MediaMetadataCompat>(NOTHING_PLAYING)
 
     val transportControls: MediaControllerCompat.TransportControls
         get() = mediaController.transportControls

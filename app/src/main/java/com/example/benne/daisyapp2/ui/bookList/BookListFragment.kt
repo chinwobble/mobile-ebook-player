@@ -21,7 +21,7 @@ import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 /**
  * Created by benne on 6/01/2018.
  */
-class BookListFragment() : Fragment() {
+class BookListFragment : Fragment() {
     private lateinit var _viewModel: BookListViewModel
     private lateinit var mainActivityViewModel: MainActivityViewModel
     private lateinit var _bookListAdapter: BookListAdapter
@@ -37,7 +37,7 @@ class BookListFragment() : Fragment() {
 
         //set the media item
         val binding = FragmentBookListBinding.inflate(inflater, container, false)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         binding.viewModel = _viewModel
         val recyclerView = binding.mediaItemsRv
@@ -45,10 +45,10 @@ class BookListFragment() : Fragment() {
         _bookListAdapter = BookListAdapter()
 
         recyclerView.adapter = _bookListAdapter
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.context)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
 
         recyclerView.addItemDecoration(
-                androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
 
         _viewModel.children.observe(viewLifecycleOwner, Observer<List<MediaBrowserCompat.MediaItem>> { items ->

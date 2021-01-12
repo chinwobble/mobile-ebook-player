@@ -26,14 +26,13 @@ class BookDetailsViewModel (
             = MediatorLiveData<List<BookSection>>()
             .also {sections ->
                 sections.value = listOf()
-                sections.addSource(bookSections, { elements ->
+                sections.addSource(bookSections) { elements ->
                     elements?.groupBy { it.GroupId }
-                            ?.map {
+                            ?.map { it ->
                                 val section = elements.find { x -> x.GroupId == it.key }!!
                                 BookSection(section, it.value.filter { it != section })
                             }.also { sections.value = it }
                 }
-                )
             }
 
     private val subscriptionCallback = object : MediaBrowserCompat.SubscriptionCallback() {

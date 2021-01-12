@@ -38,16 +38,15 @@ class BookDetailsFragment : Fragment() {
                 androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
         )
 
-        _viewModel.sections.observe(this, Observer { items ->
+        _viewModel.sections.observe(viewLifecycleOwner, Observer { items ->
             _bookDetailsAdapter.items = items!!
         })
 
-        _viewModel.sections.observe(this, Observer { items ->
-
+        _viewModel.sections.observe(viewLifecycleOwner, Observer { items ->
             print(items)
         })
 
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         return binding.root
     }
 

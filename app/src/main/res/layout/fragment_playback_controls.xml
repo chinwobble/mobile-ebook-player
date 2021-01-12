@@ -10,13 +10,13 @@
             name="viewModel"
             type="com.example.benne.daisyapp2.ui.playbackControls.PlaybackControlsViewModel"
             />
-        <variable
-            name="listener"
-            type="com.example.benne.daisyapp2.ui.playbackControls.PlaybackControlsFragmentUserActionsListener"
-            />
-        <variable
-            name="item"
-            type="android.support.v4.media.MediaBrowserCompat.MediaItem" />
+<!--        <variable-->
+<!--            name="listener"-->
+<!--            type="com.example.benne.daisyapp2.ui.playbackControls.PlaybackControlsFragmentUserActionsListener"-->
+<!--            />-->
+<!--        <variable-->
+<!--            name="item"-->
+<!--            type="android.support.v4.media.MediaBrowserCompat.MediaItem" />-->
     </data>
     <androidx.cardview.widget.CardView
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                     android:maxLines="1"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="?android:attr/textColorPrimary"
-                    tools:text="The Best Music EVAH1111 THE BEST" />
+                    tools:text="@{viewModel.playingBookText}" />
 
                 <TextView
                     android:id="@+id/artist"
@@ -53,8 +53,10 @@
                     android:contentDescription="@string/currently_playing_artist"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    tools:text="@{viewModel.PlayingBookText}" />
+                    android:text="@{viewModel.playingSectionText}"
+
+                    tools:text="Playing Section Text" />
+                <!--                    android:text="@{viewModel.playingSectionText}"-->
                 <!--<TextView-->
                 <!--android:id="@+id/extra_info"-->
                 <!--tools:text="@{viewModel.PlayingBookText}"-->
@@ -96,7 +98,7 @@
                     android:layout_weight="1"
                     android:background="?selectableItemBackgroundBorderless"
                     android:contentDescription="Play"
-                    android:onClick="@{(view) -> listener.onPlayPressed()}"
+                    android:onClick="@{(view) -> viewModel.onPlayPressed()}"
                     android:padding="8dp"
                     android:src="@drawable/ic_play_arrow_black_24dp"
                     android:tint="@color/colorPrimaryDark"
@@ -109,7 +111,7 @@
                     android:layout_weight="1"
                     android:background="?selectableItemBackgroundBorderless"
                     android:contentDescription="Next"
-                    android:onClick="@{(view) -> listener.onPlayPressed()}"
+                    android:onClick="@{(view) -> viewModel.onPlayPressed()}"
                     android:padding="8dp"
                     android:src="@drawable/ic_skip_next_black_24dp"
                     android:tint="@color/colorPrimaryDark"
