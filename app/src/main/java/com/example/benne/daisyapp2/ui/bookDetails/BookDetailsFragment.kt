@@ -21,7 +21,7 @@ class BookDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val context = activity ?: return null
-        val bookMediaId = BookDetailsFragmentArgs.fromBundle(arguments!!).mediaId
+        val bookMediaId = BookDetailsFragmentArgs.fromBundle(requireArguments()).mediaId
 
         _viewModel = ViewModelProvider(this, InjectorUtils.provideBookDetailsFragmentViewModel(context, bookMediaId))
             .get(BookDetailsViewModel::class.java)
