@@ -9,6 +9,10 @@ import java.io.*
  * Created by benne on 7/01/2018.
  */
 object NCCParser {
+
+    /**
+     * Takes in an ncc.html file and parses it to create a DaisyBook
+     */
     fun parseNCC(file: File): DaisyBook {
         val document = Jsoup.parse(file.readText())
         val headChildren = document.head().children()
