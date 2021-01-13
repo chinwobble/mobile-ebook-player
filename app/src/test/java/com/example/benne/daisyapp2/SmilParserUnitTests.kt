@@ -8,7 +8,7 @@ import java.io.FileNotFoundException
 
 class SmilParserUnitTests {
     companion object {
-        private val path = File("").absolutePath + "\\src\\test\\java\\com\\example\\benne\\daisyapp2"
+        private val path = File("").absolutePath + "\\src\\test\\resources\\com\\example\\benne\\daisyapp2"
         private var smilElements: List<SmilParElement>? = null
         @BeforeClass
         @JvmStatic fun smilTestSetup() {

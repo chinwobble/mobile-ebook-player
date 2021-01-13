@@ -41,7 +41,7 @@ object NCCParser {
 
     private fun ParseSections(body: Element): List<NavElement> {
         val results = mutableListOf<NavElement>()
-        for (i in 0 until body.children().count()) {
+        for (i in 0..body.children().count() -1) {
             val current = body.children()[i]
             val itemToAdd = when (current.tagName().toLowerCase()) {
                 in arrayOf("h1", "h2", "h3", "h4", "h5", "h6") -> toHeading(current)

@@ -12,7 +12,7 @@ import java.io.FileNotFoundException
 class NCCParserUnitTests {
     companion object {
         private var book: DaisyBook? = null
-        private val path = File("").absolutePath + "\\src\\test\\java\\com\\example\\benne\\daisyapp2"
+        private val path = File("").absolutePath + "\\src\\test\\res"
         @BeforeClass @JvmStatic fun nccTestSetup() {
             try {
                 val file = File(path + "\\nccTestFile.html")
