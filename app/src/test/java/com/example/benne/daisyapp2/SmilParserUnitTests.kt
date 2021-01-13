@@ -8,13 +8,14 @@ import java.io.FileNotFoundException
 
 class SmilParserUnitTests {
     companion object {
-        private val path = File("").absolutePath + "\\src\\test\\resources\\com\\example\\benne\\daisyapp2"
+        private val fileURL = javaClass?.classLoader?.getResource("smilParseTestFile.html")
         private var smilElements: List<SmilParElement>? = null
         @BeforeClass
         @JvmStatic fun smilTestSetup() {
             try {
-                val file = File(path + "\\smilParserTestFile.html")
+                val file = File(fileURL?.toURI())
                 smilElements = parseSmil(file.toString())
+                // TODO: 13/01/2021 this will not work - need to read the file into string 
             } catch (ffe: FileNotFoundException) {
                 println(ffe.message)
             }

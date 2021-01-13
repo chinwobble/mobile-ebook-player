@@ -12,10 +12,10 @@ import java.io.FileNotFoundException
 class NCCParserUnitTests {
     companion object {
         private var book: DaisyBook? = null
-        private val path = File("").absolutePath + "\\src\\test\\res"
+        private val fileURL = javaClass?.classLoader?.getResource("nccTestFile.html")
         @BeforeClass @JvmStatic fun nccTestSetup() {
             try {
-                val file = File(path + "\\nccTestFile.html")
+                val file = File(fileURL?.toURI())
                 book = parseNCC(file)
             } catch (ffe: FileNotFoundException) {
                 println(ffe.message)
