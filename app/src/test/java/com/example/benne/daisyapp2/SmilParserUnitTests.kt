@@ -2,23 +2,37 @@ package com.example.benne.daisyapp2
 
 import com.example.benne.daisyapp2.data.daisy202.SmilParElement
 import com.example.benne.daisyapp2.data.daisy202.SmilParser.Companion.parseSmil
+import junit.framework.Assert.assertEquals
 import org.junit.BeforeClass
+import org.junit.Test
 import java.io.File
 import java.io.FileNotFoundException
+import java.util.*
 
 class SmilParserUnitTests {
     companion object {
-        private val fileURL = javaClass?.classLoader?.getResource("smilParseTestFile.html")
+        private val fileURL = javaClass?.classLoader?.getResource("smilParserTestFile.smil")
+        val file = File(fileURL?.toURI())
         private var smilElements: List<SmilParElement>? = null
         @BeforeClass
         @JvmStatic fun smilTestSetup() {
             try {
-                val file = File(fileURL?.toURI())
-                smilElements = parseSmil(file.toString())
-                // TODO: 13/01/2021 this will not work - need to read the file into string 
+                var data: String = ""
+                Scanner(file).use {
+                    while(it.hasNextLine()) {
+                        data += it.nextLine()
+                    }
+                }
+
+                smilElements = parseSmil(data)
+                println(smilElements.toString())
             } catch (ffe: FileNotFoundException) {
                 println(ffe.message)
             }
         }
     }
+
+    @Test
+    fun `test test` () =
+            assertEquals(1, 1)
 }
