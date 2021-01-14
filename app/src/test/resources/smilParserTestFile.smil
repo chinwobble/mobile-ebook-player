@@ -20,3 +20,8 @@
                 <seq>
                     <audio src="50ManagementIdeas_010.mp3" clip-begin="npt=0.000s" clip-end="npt=0.539s" id="qwrt_0001" />
                     <audio src="50ManagementIdeas_010.mp3" clip-begin="npt=0.539s" clip-end="npt=2.302s" id="qwrt_0002" />
+                </seq>
+            </par>
+        </seq>
+    </body>
+</smil>
