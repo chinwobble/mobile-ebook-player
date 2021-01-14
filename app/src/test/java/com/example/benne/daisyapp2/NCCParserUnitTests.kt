@@ -50,7 +50,7 @@ class NCCParserUnitTests {
         assertEquals(3, book?.navElements?.size)
 
     @Test
-    fun `parseNCC - First NavElement id=dgaw_0001` () =
+    fun `parseNCC - First NavElement groupId=dgaw_0001` () =
         assertEquals("dgaw_0001", book?.navElements?.get(0)?.groupId)
 
     @Test
@@ -66,7 +66,7 @@ class NCCParserUnitTests {
             assertEquals("1", book?.navElements?.get(1)?.label)
 
     @Test
-    fun `parseNCC - Third NavElement id=dgaw_0010` () =
+    fun `parseNCC - Third NavElement groupId=dgaw_0010` () =
             assertEquals("dgaw_0010", book?.navElements?.get(2)?.groupId)
 
     @Test

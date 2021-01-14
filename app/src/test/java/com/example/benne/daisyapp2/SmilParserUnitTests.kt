@@ -23,11 +23,9 @@ class SmilParserUnitTests {
                         data += it.nextLine()
                     }
                 }
-
                 smilElements = parseSmil(data)
                 println(smilElements.toString())
-                println(smilElements?.get(0)?.id)
-                println("text " + smilElements?.get(0)?.text)
+                println(smilElements?.get(0)?.text)
             } catch (ffe: FileNotFoundException) {
                 println(ffe.message)
             }
@@ -35,6 +33,62 @@ class SmilParserUnitTests {
     }
 
     @Test
-    fun `test test` () =
-            assertEquals(1, 1)
+    fun `SmilParser - smilElements size = 1` () =
+            assertEquals(1, smilElements?.size)
+
+    @Test
+    fun `SmilParser - texts Id = dgaw_0012` () =
+            assertEquals("dgaw_0012", smilElements?.get(0)?.text?.id)
+
+    @Test
+    fun `SmilParser - texts file = 57790_50_management_ideashtml` () =
+            assertEquals("57790_50_management_ideas.html", smilElements?.get(0)?.text?.file)
+
+    @Test
+    fun `SmilParser - texts Fragment= 57790_50_management_ideashtml` () =
+            assertEquals("57790_50_management_ideas.html", smilElements?.get(0)?.text?.Fragment)
+
+    @Test
+    fun `SmilParser - audio = null` () =
+            assertEquals(null, smilElements?.get(0)?.audio)
+
+    @Test
+    fun `SmilParser - nestedSeq size = 1` () =
+            assertEquals(1, smilElements?.get(0)?.nestedSeq?.size)
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement size = 2` () =
+            assertEquals(2, smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.size)
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(0) id = qwrt_001` () =
+            assertEquals("qwrt_0001", smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(0)?.id)
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(0) clipStart = 0` () =
+            assertEquals(0, smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(0)?.clipStart)
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(0) clipEnd = 539000` () =
+            assertEquals(539000, smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(0)?.clipEnd)
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(0) file = 50ManagementIdeas_010mp3` () =
+            assertEquals("50ManagementIdeas_010.mp3", smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(1)?.file)
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(1) id = qwrt_002` () =
+            assertEquals("qwrt_0002", smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(1)?.id)
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(1) clipStart = 539000` () =
+            assertEquals("539000", smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(1)?.clipStart.toString())
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(1) clipEnd = 2302000` () =
+            assertEquals("2302000", smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(1)?.clipEnd.toString())
+
+    @Test
+    fun `SmilParser - nestedSeq SmilAudioElement(1) file = 50ManagementIdeas_010mp3` () =
+            assertEquals("50ManagementIdeas_010.mp3", smilElements?.get(0)?.nestedSeq?.get(0)?.audioReferences?.get(1)?.file)
 }
