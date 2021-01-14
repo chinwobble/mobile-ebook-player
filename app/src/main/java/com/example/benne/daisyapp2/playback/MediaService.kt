@@ -62,9 +62,11 @@ class MediaService :
 
     // Wrap a SimpleExoPlayer with a decorator to handle audio focus for us.
     private val exoPlayer: ExoPlayer by lazy {
-        ExoPlayerFactory.newSimpleInstance(this).apply {
-            setAudioAttributes(audioAttributes, true)
-        }
+        SimpleExoPlayer.Builder(this)
+            .build()
+            .also {
+                it.setAudioAttributes(audioAttributes, true)
+            }
     }
 
     override fun onCreate() {
@@ -117,7 +119,7 @@ class MediaService :
                     exoPlayer,
                     dataSourceFactory)
             exoPlayer.addListener(playbackPreparer)
-            it.setPlayer(exoPlayer, playbackPreparer)
+            it.setPlayer(exoPlayer)
             it.setQueueNavigator(UampQueueNavigator(mediaSession))
         }
     }
@@ -298,7 +300,7 @@ private class UampQueueNavigator(
     private val window = Timeline.Window()
     override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat =
             player.currentTimeline
-                    .getWindow(windowIndex, window, true).tag as MediaDescriptionCompat
+                    .getWindow(windowIndex, window).tag as MediaDescriptionCompat
 }
 
 /**

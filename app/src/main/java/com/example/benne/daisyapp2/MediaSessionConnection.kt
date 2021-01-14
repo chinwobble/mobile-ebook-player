@@ -140,7 +140,7 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
     }
 
     companion object {
-        val TAG: String = MediaSessionConnection.javaClass.simpleName
+        val TAG: String = MediaSessionConnection::class.java.simpleName
         // For Singleton instantiation.
         @Volatile
         private var instance: MediaSessionConnection? = null
