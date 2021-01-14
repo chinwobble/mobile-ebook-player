@@ -3,7 +3,6 @@ package com.example.benne.daisyapp2
 import com.example.benne.daisyapp2.data.daisy202.SmilParElement
 import com.example.benne.daisyapp2.data.daisy202.SmilParser.Companion.parseSmil
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertSame
 import org.junit.BeforeClass
 import org.junit.Test
 import java.io.File

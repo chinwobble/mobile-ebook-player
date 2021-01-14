@@ -2,7 +2,6 @@ package com.example.benne.daisyapp2
 
 import com.example.benne.daisyapp2.data.daisy202.DaisyBook
 import com.example.benne.daisyapp2.data.daisy202.NCCParser.parseNCC
-import com.example.benne.daisyapp2.data.daisy202.NavElement
 import org.junit.Assert.assertEquals
 import org.junit.BeforeClass
 import org.junit.Test
