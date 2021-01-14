@@ -18,7 +18,6 @@ class NCCParserUnitTests {
             try {
                 val file = File(fileURL?.toURI())
                 book = parseNCC(file)
-                println(book?.navElements?.get(2).toString())
             } catch (ffe: FileNotFoundException) {
                 println(ffe.message)
             }
