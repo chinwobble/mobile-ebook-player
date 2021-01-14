@@ -24,8 +24,6 @@ class SmilParserUnitTests {
                     }
                 }
                 smilElements = parseSmil(data)
-                println(smilElements.toString())
-                println(smilElements?.get(0)?.text)
             } catch (ffe: FileNotFoundException) {
                 println(ffe.message)
             }
