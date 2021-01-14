@@ -2,6 +2,7 @@ package com.example.benne.daisyapp2
 
 import com.example.benne.daisyapp2.data.daisy202.DaisyBook
 import com.example.benne.daisyapp2.data.daisy202.NCCParser.parseNCC
+import com.example.benne.daisyapp2.data.daisy202.NavElement
 import org.junit.Assert.assertEquals
 import org.junit.BeforeClass
 import org.junit.Test
@@ -17,6 +18,7 @@ class NCCParserUnitTests {
             try {
                 val file = File(fileURL?.toURI())
                 book = parseNCC(file)
+                println(book?.navElements?.get(2).toString())
             } catch (ffe: FileNotFoundException) {
                 println(ffe.message)
             }
@@ -54,4 +56,20 @@ class NCCParserUnitTests {
     @Test
     fun `parseNCC - First NavElement mlabel=50 MANAGEMENT IDEAS YOU REALLY NEED TO KNOW` () =
         assertEquals("50 MANAGEMENT IDEAS YOU REALLY NEED TO KNOW", book?.navElements?.get(0)?.label)
+
+    @Test
+    fun `parseNCC - Second NavElement groupId=dgaw_0001` () =
+            assertEquals("dgaw_0001", book?.navElements?.get(1)?.groupId)
+
+    @Test
+    fun `parseNCC - Second NavElement mlabel=1` () =
+            assertEquals("1", book?.navElements?.get(1)?.label)
+
+    @Test
+    fun `parseNCC - Third NavElement id=dgaw_0010` () =
+            assertEquals("dgaw_0010", book?.navElements?.get(2)?.groupId)
+
+    @Test
+    fun `parseNCC - Third NavElement mlabel=Timeline` () =
+            assertEquals("Timeline", book?.navElements?.get(2)?.label)
 }
