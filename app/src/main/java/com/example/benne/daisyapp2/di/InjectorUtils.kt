@@ -2,8 +2,10 @@ package com.example.benne.daisyapp2.di
 
 import android.content.ComponentName
 import android.content.Context
+import androidx.fragment.app.Fragment
 import com.example.benne.daisyapp2.MediaSessionConnection
 import com.example.benne.daisyapp2.playback.MediaService
+import com.example.benne.daisyapp2.ui.bookDetails.BookDetailsFragmentArgs
 import com.example.benne.daisyapp2.ui.bookDetails.BookDetailsViewModel
 import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
 import com.example.benne.daisyapp2.ui.bookList.BookListViewModel
@@ -41,9 +43,10 @@ object InjectorUtils {
         return PlaybackControlsViewModel.Factory(mediaSessionConnection)
     }
 
-    fun provideBookDetailsFragmentViewModel(context: Context, mediaId: String)
+    fun provideBookDetailsFragmentViewModel(fragment: Fragment)
             : BookDetailsViewModel.Factory {
-        val applicationContext = context.applicationContext
+        val applicationContext = fragment.requireContext().applicationContext
+        val mediaId = BookDetailsFragmentArgs.fromBundle(fragment.requireArguments()).mediaId
 
         val mediaSessionConnection = provideMediaSessionConnection(applicationContext)
         return BookDetailsViewModel.Factory(mediaSessionConnection, mediaId)

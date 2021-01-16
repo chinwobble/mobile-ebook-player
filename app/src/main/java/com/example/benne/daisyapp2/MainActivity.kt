@@ -11,6 +11,7 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
@@ -29,7 +30,10 @@ import com.google.android.material.R as AR
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainActivityViewModel
+    private val viewModel by viewModels<MainActivityViewModel> {
+        InjectorUtils.provideMainActivityViewModel(this)
+    }
+
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -47,8 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
-        viewModel = ViewModelProvider(this, InjectorUtils.provideMainActivityViewModel(this))
-                .get(MainActivityViewModel::class.java)
 
         /**
          * Observe changes to the [MainActivityViewModel.rootMediaId]. When the app starts,

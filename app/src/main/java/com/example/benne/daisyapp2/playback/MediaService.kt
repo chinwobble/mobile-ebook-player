@@ -120,6 +120,7 @@ class MediaService :
                     dataSourceFactory)
             exoPlayer.addListener(playbackPreparer)
             it.setPlayer(exoPlayer)
+            it.setPlaybackPreparer(playbackPreparer)
             it.setQueueNavigator(UampQueueNavigator(mediaSession))
         }
     }

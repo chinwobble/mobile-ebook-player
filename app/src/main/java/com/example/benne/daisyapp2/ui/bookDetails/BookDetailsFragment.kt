@@ -1,12 +1,10 @@
 package com.example.benne.daisyapp2.ui.bookDetails
 
-import android.app.SearchManager
 import android.os.Bundle
 import android.view.*
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.benne.daisyapp2.R
 import com.example.benne.daisyapp2.databinding.FragmentBookDetailsBinding
 import com.example.benne.daisyapp2.di.InjectorUtils
@@ -16,33 +14,29 @@ import com.example.benne.daisyapp2.di.InjectorUtils
  * Created by benne on 10/01/2018.
  */
 class BookDetailsFragment : Fragment() {
-    private lateinit var _viewModel: BookDetailsViewModel
+    private val viewModel by viewModels<BookDetailsViewModel> {
+        InjectorUtils.provideBookDetailsFragmentViewModel(this)
+    }
+
     private lateinit var _bookDetailsAdapter: BookDetailsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val context = activity ?: return null
-        val bookMediaId = BookDetailsFragmentArgs.fromBundle(requireArguments()).mediaId
-
-        _viewModel = ViewModelProvider(this, InjectorUtils.provideBookDetailsFragmentViewModel(context, bookMediaId))
-            .get(BookDetailsViewModel::class.java)
-
-        _viewModel.bookMediaId = bookMediaId
         val binding = FragmentBookDetailsBinding.inflate(inflater, container, false)
 
         val recyclerView = binding.root.findViewById(R.id.book_details_rv) as androidx.recyclerview.widget.RecyclerView
 
-        _bookDetailsAdapter = BookDetailsAdapter(_viewModel)
+        _bookDetailsAdapter = BookDetailsAdapter(viewModel)
         recyclerView.adapter = _bookDetailsAdapter
 
         recyclerView.addItemDecoration(
                 androidx.recyclerview.widget.DividerItemDecoration(activity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
         )
 
-        _viewModel.sections.observe(viewLifecycleOwner, Observer { items ->
-            _bookDetailsAdapter.items = items!!
+        viewModel.sections.observe(viewLifecycleOwner, Observer { items ->
+            _bookDetailsAdapter.items = items
         })
 
-        _viewModel.sections.observe(viewLifecycleOwner, Observer { items ->
+        viewModel.sections.observe(viewLifecycleOwner, Observer { items ->
             print(items)
         })
 
@@ -50,9 +44,6 @@ class BookDetailsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 //    override fun performCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Boolean {
 //        return super.performCreateOptionsMenu(menu, inflater)
 //    }

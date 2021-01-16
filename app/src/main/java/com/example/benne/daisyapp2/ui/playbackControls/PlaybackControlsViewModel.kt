@@ -11,7 +11,7 @@ import com.example.benne.daisyapp2.ui.bookList.BookListViewModel
 /**
  * Created by benne on 19/02/2018.
  */
-class PlaybackControlsViewModel(val mediaSessionConnection: MediaSessionConnection)
+class PlaybackControlsViewModel(private val mediaSessionConnection: MediaSessionConnection)
     : ViewModel()
     , PlaybackControlsFragmentUserActionsListener {
 

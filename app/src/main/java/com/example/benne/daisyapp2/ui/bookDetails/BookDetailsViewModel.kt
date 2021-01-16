@@ -12,10 +12,9 @@ import com.example.benne.daisyapp2.playback.GroupId
  */
 class BookDetailsViewModel (
         private val mediaSessionConnection: MediaSessionConnection,
-        mediaId: String)
+        private val mediaId: String)
     : ViewModel() {
 
-    var bookMediaId: String? = null
     val bookSections: MutableLiveData<List<MediaBrowserCompat.MediaItem>>
             = MutableLiveData<List<MediaBrowserCompat.MediaItem>>()
                 .also {
@@ -48,7 +47,7 @@ class BookDetailsViewModel (
 
     fun playSection(item: MediaBrowserCompat.MediaItem) {
         val bundle = Bundle()
-        bundle.putString("bookMediaId", bookMediaId)
+        bundle.putString("bookMediaId", mediaId)
         mediaSessionConnection.playMedia(item, bundle)
     }
 

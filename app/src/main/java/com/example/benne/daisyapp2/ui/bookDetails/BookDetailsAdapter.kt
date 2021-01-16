@@ -27,7 +27,7 @@ class BookDetailsAdapter(private val vm: BookDetailsViewModel)
         return items.count()
     }
 
-    override fun onBindViewHolder(holder: BookDetailsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position].section
         val listener = object : BookDetailsUserActionListener {
             override fun onPlaySection(item: MediaBrowserCompat.MediaItem) {
@@ -38,11 +38,11 @@ class BookDetailsAdapter(private val vm: BookDetailsViewModel)
         holder.bind(items[position], listener)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookDetailsAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemBinding = ListItemPlayableMediaBinding
                 .inflate(layoutInflater, parent, false)
-        return BookDetailsAdapter.ViewHolder(itemBinding)
+        return ViewHolder(itemBinding)
     }
 
     class ViewHolder(private val binding: ListItemPlayableMediaBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
