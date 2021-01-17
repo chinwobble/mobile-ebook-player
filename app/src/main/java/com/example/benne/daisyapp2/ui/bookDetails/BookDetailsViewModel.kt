@@ -51,10 +51,6 @@ class BookDetailsViewModel (
         mediaSessionConnection.playMedia(item, bundle)
     }
 
-    fun selectNavSection() {
-
-    }
-
     class Factory(private val mediaSessionConnection: MediaSessionConnection,
                   private val mediaId: String
     ) : ViewModelProvider.NewInstanceFactory() {

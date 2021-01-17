@@ -12,8 +12,38 @@ Libraries used:
 - Dagger 2
 - Google ExoPlayer
 
--
-https://github.com/android/sunflower
+based on:
+- [Android UAMP](https://github.com/android/uamp)
+- [Android Sunflower](https://github.com/android/sunflower)
+
+## How the app works
+
+This app uses [Android's Media Service](https://developer.android.com/guide/topics/media-apps/media-apps-overview).
+The architecture is event based, which can make it difficult to follow execution.
+
+Architecture classes:
+Client classes:
+- MediaControllerCallback
+- MediaBrowserConnectionCallback
+- TransportControls
+
+
+Server classes:
+- PlaybackPreparer
+- QueueManager
+
+The client predominate sends commands to the service using the transportControls.
+
+The server can declare which features it in DaisyPlaybackPreparer.
+
+| actions         | service handler                                        |
+| ---             | ---                                                    |
+| playFromMediaId | MediaSessionConnector.PlaybackPreparer.                |
+| skipToNext      | MediaSessionConnector.QueueNavigator.onSkipToNext      |
+| skipToPrevious  | MediaSessionConnector.QueueNavigator.onSkipToPrevious  |
+| skipToQueueItem | MediaSessionConnector.QueueNavigator.onSkipToQueueItem |
+| pause           | MediaSessionConecctor                                  |
+
 
 License
 -------

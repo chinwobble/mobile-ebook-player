@@ -44,7 +44,7 @@ class MainActivityViewModel(private val mediaSessionConnection: MediaSessionConn
         if (clickedItem.isBrowsable) {
             browseToItem(clickedItem)
         } else {
-            //mediaSessionConnection.playMedia(clickedItem)
+//            mediaSessionConnection.playMedia(clickedItem)
         }
     }
 
@@ -55,8 +55,6 @@ class MainActivityViewModel(private val mediaSessionConnection: MediaSessionConn
     private fun browseToItem(mediaItem: MediaBrowserCompat.MediaItem) {
         _navigateToMediaItem.value = Event(mediaItem.mediaId!!)
     }
-
-
 
     class Factory(private val mediaSessionConnection: MediaSessionConnection)
         : ViewModelProvider.NewInstanceFactory() {

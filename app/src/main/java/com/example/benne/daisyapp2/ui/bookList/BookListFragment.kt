@@ -33,8 +33,6 @@ class BookListFragment : Fragment() {
     private lateinit var _bookListAdapter: BookListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val context = activity ?: return null
-
         //set the media item
         val binding = FragmentBookListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
@@ -45,13 +43,13 @@ class BookListFragment : Fragment() {
         _bookListAdapter = BookListAdapter()
 
         recyclerView.adapter = _bookListAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         recyclerView.addItemDecoration(
             DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         )
 
-        viewModel.children.observe(viewLifecycleOwner, Observer<List<MediaBrowserCompat.MediaItem>> { items ->
+        viewModel.children.observe(viewLifecycleOwner, Observer { items ->
             Log.d(TAG, "observed changes to children items: ${items!!.count()}")
             _bookListAdapter.submitList(items)
         })

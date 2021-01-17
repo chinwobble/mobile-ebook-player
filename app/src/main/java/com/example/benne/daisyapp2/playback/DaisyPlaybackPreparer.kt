@@ -41,7 +41,8 @@ class DaisyPlaybackPreparer(
                 Player.STATE_ENDED -> {
                     val playableClip = queueManager.nextPlayableClip()
                     playableClip?.let {
-                        exoPlayer.prepare(it.toClippingMediaSource(dataSourceFactory))
+                        exoPlayer.setMediaSource(it.toClippingMediaSource(dataSourceFactory))
+                        exoPlayer.prepare()
                     }
                 }
                 Player.STATE_READY -> {
@@ -79,7 +80,8 @@ class DaisyPlaybackPreparer(
 
             if (!mediaIsSame) {
                 currentPreparedMediaId = playableClip.hashCode().toString()
-                exoPlayer.prepare(source)
+                exoPlayer.setMediaSource(source)
+                exoPlayer.prepare()
             }
 
             exoPlayer.playWhenReady = true

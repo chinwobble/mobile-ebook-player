@@ -43,8 +43,7 @@ import com.google.android.exoplayer2.util.Util
  * For more information on implementing a MediaBrowserService,
  * visit [https://developer.android.com/guide/topics/media-apps/audio-app/building-a-mediabrowserservice.html](https://developer.android.com/guide/topics/media-apps/audio-app/building-a-mediabrowserservice.html).
  */
-class MediaService :
-        MediaBrowserServiceCompat() {
+class MediaService : MediaBrowserServiceCompat() {
     lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaController: MediaControllerCompat
     private lateinit var becomingNoisyReceiver: BecomingNoisyReceiver
@@ -168,7 +167,6 @@ class MediaService :
     override fun onLoadChildren(
             parentMediaId: String,
             result: Result<List<MediaItem>>) {
-
         if (parentMediaId == MEDIA_ROOT) {
             result.sendResult(mediaProvider.books.map { toMediaItem(it) })
         }

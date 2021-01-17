@@ -11,8 +11,6 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
-import com.example.benne.daisyapp2.viewModels.MainActivityViewModel
-
 
 /**
  * Class that manages a connection to a [MediaBrowserServiceCompat] instance.
@@ -40,9 +38,6 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
     val playbackState = MutableLiveData<PlaybackStateCompat>(EMPTY_PLAYBACK_STATE)
     val nowPlaying = MutableLiveData<MediaMetadataCompat>(NOTHING_PLAYING)
 
-    val transportControls: MediaControllerCompat.TransportControls
-        get() = mediaController.transportControls
-
     private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
     private val mediaBrowser = MediaBrowserCompat(context,
             serviceComponent,
@@ -66,7 +61,7 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
      */
     fun playMedia(mediaItem: MediaBrowserCompat.MediaItem, extras: Bundle) {
         val nowPlaying = nowPlaying.value
-        val transportControls = transportControls
+        val transportControls = mediaController.transportControls
 
         val isPrepared = playbackState.value == null ?: false
         if (isPrepared && mediaItem.mediaId == nowPlaying?.mediaMetadata) {
@@ -116,7 +111,6 @@ class MediaSessionConnection(context: Context, serviceComponent: ComponentName) 
     }
 
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
-
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
             playbackState.postValue(state ?: EMPTY_PLAYBACK_STATE)
         }

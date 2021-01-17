@@ -1,6 +1,7 @@
 package com.example.benne.daisyapp2.data.daisy202
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.*
 import android.support.v4.media.*
 import com.example.benne.daisyapp2.data.*
@@ -87,12 +88,12 @@ fun toMediaItem(book: DaisyBook) : MediaBrowserCompat.MediaItem {
     val flags =
         MediaBrowserCompat.MediaItem.FLAG_BROWSABLE
     val metadata = book.metadata
-    val description = MediaDescriptionCompat
-        .Builder()
-        .setMediaId(book.toMediaId())
-        .setTitle(metadata.title)
-        .setDescription(metadata.creator)
-        .build()
+    val description = MediaDescriptionCompat.Builder()
+            .setMediaUri(Uri.parse(book.location))
+            .setMediaId(book.toMediaId())
+            .setTitle(metadata.title)
+            .setDescription(metadata.creator)
+            .build()
 
     return MediaBrowserCompat.MediaItem(description, flags)
 }

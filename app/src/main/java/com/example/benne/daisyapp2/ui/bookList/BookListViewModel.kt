@@ -49,7 +49,7 @@ class BookListViewModel(mediaSessionConnection: MediaSessionConnection)
         // it.nowPlaying.observeForever(mediaMetadataObserver)
     }
 
-    val currentSelection: MutableLiveData<String> = MutableLiveData()
+    val currentSelection: LiveData<String> = MutableLiveData(MEDIA_ROOT)
     val children: MutableLiveData<List<MediaItem>> = MutableLiveData<List<MediaItem>>().also {
         it.value = listOf()
     }
@@ -57,21 +57,9 @@ class BookListViewModel(mediaSessionConnection: MediaSessionConnection)
         it.value = false
     }
 
-    init {
-        currentSelection.value = MEDIA_ROOT
-    }
-
     fun setSelectedItem(mediaId: String) {
         val mutableCurrent = currentSelection as MutableLiveData<String>
         mutableCurrent.postValue(mediaId)
-    }
-
-    fun updateItems(children: Iterable<MediaItem>) {
-        with(this.children) {
-//            clear()
-//            addAll(children)
-            //empty.set(isEmpty())
-        }
     }
 
     class Factory(private val mediaSessionConnection: MediaSessionConnection)
