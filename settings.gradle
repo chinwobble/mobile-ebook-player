@@ -1,1 +1,2 @@
 include ':app'
+include ':daisy-book-reader'
